@@ -386,12 +386,181 @@ rot13("GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK.") 应该解码为 "THE QUIC
 </p>
 -----------------------以上16个为初级算法------------------------<br/>
 <p>
+17,区间求值算法<br/>
+规则：<br/>
+我们会传递给你一个包含两个数字的数组。返回这两个数字和它们之间所有数字的和。<br/>
+
+最小的数字并非总在最前面。<br/>
+思路：<br/>
+示例：<br/>
+function sumAll(arr) {<br/>
+
+return arr;<br/>
+}<br/>
+
+sumAll([1, 4]);<br/>
+测试case：<br/>
+sumAll([1, 4]) 应该返回一个数字。<br/>
+sumAll([1, 4]) 应该返回 10。<br/>
+sumAll([4, 1]) 应该返回 10。<br/>
+sumAll([5, 10]) 应该返回 45。<br/>
+sumAll([10, 5]) 应该返回 45。<br/>
+</p>
+<p>
+18,找出数组间差异算法<br/>
+规则：<br/>
+比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。<br/>
+思路：<br/>
+示例：<br/>
+function diff(arr1, arr2) {<br/>
+var newArr = [];<br/>
+/
+
+return newArr;<br/>
+}<br/>
+
+diff([1,1,2, 2, 3,3, 5,3,5], [1, 2,3,3, 5,3,5, 3, 4, 5]);<br/>
+diff(["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]);<br/>
+测试case：<br/>
+diff([1, 2, 3, 5], [1, 2, 3, 4, 5]) 应该返回一个数组。<br/>
+["diorite", "andesite", "grass", "dirt", "pink wool", "dead shrub"],<br/> ["diorite", "andesite", "grass", "dirt", "dead shrub"] 应该返回 ["pink wool"]。<br/>
+["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"] 应该返回 ["diorite", "pink wool"]。<br/>
+["andesite", "grass", "dirt", "dead shrub"], ["andesite", "grass", "dirt", "dead shrub"] 应该返回 []。<br/>
+[1, 2, 3, 5], [1, 2, 3, 4, 5] 应该返回 [4]。<br/>
+[1, "calf", 3, "piglet"], [1, "calf", 3, 4] 应该返回 ["piglet", 4]。
+[], ["snuffleupagus", "cookie monster", "elmo"] 应该返回 ["snuffleupagus", "cookie monster", "elmo"]。<br/>
+[1, "calf", 3, "piglet"], [7, "filly"] 应该返回 [1, "calf", 3, "piglet", 7, "filly"]。<br/>
+</p>
+<p>
+19,对象搜索算法<br/>
+规则：<br/>
+写一个 function，它遍历一个对象数组（第一个参数）并返回一个包含相匹配的属性-值对（第二个参数）的所有对象的数组。如果返回的数组中包含 source 对象的属性-值对，那么此对象的每一个属性-值对都必须存在于 collection 的对象中。<br/>
+
+例如，如果第一个参数是 [{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }]，第二个参数是 { last: "Capulet" }，那么你必须从数组（第一个参数）返回其中的第三个对象，因为它包含了作为第二个参数传递的属性-值对。<br/>
+思路：<br/>
+示例：<br/>
+function where(collection, source) {<br/>
+var arr = [];<br/>
+
+return arr;<br/>
+}<br/>
+
+where([{ "a": 1, "b": 2 }, { "a": 1 }, { "a": 1, "b": 2, "c": 2 }], { "a": 1, "b": 2 });<br/>
+测试case：<br/>
+where([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }) 应该返回 [{ first: "Tybalt", last: "Capulet" }]。<br/>
+where([{ "a": 1 }, { "a": 1 }, { "a": 1, "b": 2 }], { "a": 1 }) 应该返回 [{ "a": 1 }, { "a": 1 }, { "a": 1, "b": 2 }]。<br/>
+where([{ "a": 1, "b": 2 }, { "a": 1 }, { "a": 1, "b": 2, "c": 2 }], { "a": 1, "b": 2 }) 应该返回 [{ "a": 1, "b": 2 }, { "a": 1, "b": 2, "c": 2 }]。<br/>
+where([{ "a": 1, "b": 2 }, { "a": 1 }, { "a": 1, "b": 2, "c": 2 }], { "a": 1, "c": 2 }) 应该返回 [{ "a": 1, "b": 2, "c": 2 }]。<br/>
+</p>
+<p>
+20,查询替换算法<br/>
+规则：<br/>
+使用给定的参数对句子执行一次查找和替换，然后返回新句子。<br/>
+
+第一个参数是将要对其执行查找和替换的句子。<br/>
+
+第二个参数是将被替换掉的单词（替换前的单词）。<br/>
+
+第三个参数用于替换第二个参数（替换后的单词）。<br/>
+
+注意：替换时保持原单词的大小写。例如，如果你想用单词 "dog" 替换单词 "Book" ，你应该替换成 "Dog"。<br/>
+思路：<br/>
+示例：<br/>
+function myReplace(str, before, after) {<br/>
+
+return str;<br/>
+}<br/>
+
+myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");<br/>
+测试case：<br/>
+myReplace("Let us go to the store", "store", "mall") 应该返回 "Let us go to the mall"。<br/>
+myReplace("He is Sleeping on the couch", "Sleeping", "sitting") 应该返回 "He is Sitting on the couch"。<br/>
+myReplace("This has a spellngi error", "spellngi", "spelling") 应该返回 "This has a spelling error"。<br/>
+myReplace("His name is Tom", "Tom", "john") 应该返回 "His name is John"。<br/>
+myReplace("Let us get back to more Coding", "Coding", "algorithms") 应该返回 "Let us get back to more Algorithms"。<br/>
+</p>
+<p>
+21,字符配对算法<br/>
+规则：<br/>
+DNA 链缺少配对的碱基。依据每一个碱基，为其找到配对的碱基，然后将结果作为第二个数组返回。<br/>
+
+Base pairs（碱基对） 是一对 AT 和 CG，为给定的字母匹配缺失的碱基。<br/>
+
+在每一个数组中将给定的字母作为第一个碱基返回。<br/>
+
+例如，对于输入的 GCG，相应地返回 [["G", "C"], ["C","G"],["G", "C"]]<br/>
+
+字母和与之配对的字母在一个数组内，然后所有数组再被组织起来封装进一个数组。<br/>
+思路：<br/>
+示例：<br/>
+function pair(str) {<br/>
+  var arr=[];<br/>
+
+return arr;<br/>
+}<br/>
+
+pair("GCG");<br/>
+测试case：<br/>
+pair("ATCGA") 应该返回 [["A","T"],["T","A"],["C","G"],["G","C"],["A","T"]]。<br/>
+pair("TTGAG") 应该返回 [["T","A"],["T","A"],["G","C"],["A","T"],["G","C"]]。<br/>
+pair("CTCTA") 应该返回 [["C","G"],["T","A"],["C","G"],["T","A"],["A","T"]]。<br/>
+</p>
+<p>
+22,字符串查询补充算法<br/>
+规则：<br/>
+从传递进来的字母序列中找到缺失的字母并返回它。<br/>
+
+如果所有字母都在序列中，返回 undefined。<br/>
+思路：<br/>
+示例：<br/>
+function fearNotLetter(str) {<br/>
+
+return res;<br/>
+}<br/>
+
+fearNotLetter("abce");<br/>
+测试case：<br/>
+fearNotLetter("abce") 应该返回 "d"。<br/>
+fearNotLetter("abcdefghjklmno") 应该返回 "i"。<br/>
+fearNotLetter("bcd") 应该返回 undefined。<br/>
+fearNotLetter("yz") 应该返回 undefined。<br/>
+</p>
+<p>
 6,寻找数组中的最大值算法
 规则：
 思路：
 示例：
 测试case：
 </p>
+<p>
+6,寻找数组中的最大值算法
+规则：
+思路：
+示例：
+测试case：
+</p>
+<p>
+6,寻找数组中的最大值算法
+规则：
+思路：
+示例：
+测试case：
+</p>
+<p>
+6,寻找数组中的最大值算法
+规则：
+思路：
+示例：
+测试case：
+</p>
+<p>
+6,寻找数组中的最大值算法
+规则：
+思路：
+示例：
+测试case：
+</p>
+
 <p>
 6,寻找数组中的最大值算法
 规则：

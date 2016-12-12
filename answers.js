@@ -249,3 +249,161 @@ function rot13(str) { // LBH QVQ VG!
 // Change the inputs below to test
 rot13("SERR PBQR PNZC");
 //总结：以上16个为初级算法。
+//17,区间求值算法
+function sumAll(arr) {
+    var len = Math.abs(arr[1] - arr[0]) + 1;
+    var count = (arr[1] + arr[0]) * len / 2;
+    return count;
+}
+
+sumAll([1, 4]);
+//18,找出数组间差异算法
+function diff(arr1, arr2) {
+    var newArr = [];
+    // Same, same; but different.
+    arr1.sort();
+    var arr = [];
+    var obj = {};
+    arr1.forEach(function(item, index) {
+        if (!obj[item]) {
+            obj[item] = 1;
+            arr.push(item);
+        }
+    });
+    arr1 = arr;
+    console.log(arr);
+    obj = {};
+    arr = [];
+    arr2.sort();
+    arr2.forEach(function(item, index) {
+        if (!obj[item]) {
+            obj[item] = 1;
+            arr.push(item);
+        }
+    });
+    arr2 = arr;
+    console.log(arr2);
+    obj = {};
+    arr = [];
+    newArr = arr1.concat(arr2);
+    newArr.forEach(function(item, index) {
+        if (!obj[item]) {
+            obj[item] = 1;
+            arr.push(item);
+        } else {
+            arr.forEach(function(itemk, indexk) {
+                if (itemk == item) {
+                    arr.splice(indexk, 1);
+                }
+            });
+        }
+    });
+    newArr = arr;
+    console.log(newArr);
+    obj = {};
+    arr = [];
+
+    return newArr;
+}
+
+diff([1, 1, 2, 2, 3, 3, 5, 3, 5], [1, 2, 3, 3, 5, 3, 5, 3, 4, 5]);
+diff(["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]);
+//19,对象搜索算法
+function where(collection, source) {
+    var arr = [];
+    // What's in a name?
+    collection.forEach(function(item, index) {
+        var count = 0;
+        var counts = 0;
+        for (var i in source) {
+            counts++;
+            if (source[i] == item[i]) {
+                count++;
+            }
+        }
+        if (count == counts) {
+            arr.push(item);
+        }
+    });
+    return arr;
+}
+
+where([{
+    "a": 1,
+    "b": 2
+}, {
+    "a": 1
+}, {
+    "a": 1,
+    "b": 2,
+    "c": 2
+}], {
+    "a": 1,
+    "b": 2
+});
+//20,查询替换算法
+function myReplace(str, before, after) {
+    var reg = new RegExp("" + before + "", "g");
+    str = str.replace(reg, function(word) {
+        var code = word.substring(0, 1).charAt();
+        if ('A' < code && code < 'Z') {
+            return after.substring(0, 1).toUpperCase() + after.substring(1);
+        } else {
+            return after;
+        }
+
+    });
+    return str;
+}
+
+myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
+//21,字符配对算法
+function pair(str) {
+    var arr = [];
+    var a = Array.prototype.map.call(str, function(x) {
+
+        if (x == "T") {
+            arr.push(["T", "A"]);
+        } else if (x == "A") {
+            arr.push(["A", "T"]);
+        } else if (x == "G") {
+            arr.push(["G", "C"]);
+        } else if (x == "C") {
+            arr.push(["C", "G"]);
+        }
+        return arr;
+    });
+    return arr;
+}
+
+pair("GCG");
+//22,字符串查询补充算法
+function fearNotLetter(str) {
+    var res = '';
+    var narr = [];
+    var len = str.length;
+    var arr = Array.prototype.map.call(str, function(item) {
+        return item.charCodeAt();
+    });
+
+
+    arr.reduce(function(pre, next) {
+        console.log(pre, next);
+        if (next - pre > 1) {
+            var num = next - pre;
+            for (var i = 1; i < num; i++) {
+                narr.push(String.fromCharCode(pre + i));
+            }
+
+        }
+        return next;
+    });
+    console.log("narr=", narr);
+    res = narr.join('');
+    if (arr[len - 1] - arr[0] == len - 1) {
+        res = undefined;
+    }
+    return res;
+}
+
+fearNotLetter("abce");
