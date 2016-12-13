@@ -21,7 +21,7 @@ reverseString("Howdy") 应该返回 "ydwoH".<br/>
 reverseString("Greetings from Earth") 应该返回 "htraE morf sgniteerG".<br/>
 </p>
 <p>
-<h5>2,阶乘算法<h5>
+<h5>2,阶乘算法</h5>
 [规则：]<br/>
 计算一个整数的阶乘<br/>
 
