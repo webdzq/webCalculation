@@ -526,71 +526,396 @@ fearNotLetter("bcd") 应该返回 undefined。<br/>
 fearNotLetter("yz") 应该返回 undefined。<br/>
 </p>
 <p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
+23,输入检查算法<br/>
+规则：<br/>
+检查一个值是否是基本布尔类型，并返回 true 或 false。<br/>
+
+基本布尔类型即 true 和 false<br/>
+思路：<br/>
+示例：<br/>
+function boo(bool) {<br/>
+// What is the new fad diet for ghost developers? The Boolean.<br/>
+
+return bool;<br/>
+}<br/>
+
+boo(null);<br/>
+测试case：<br/>
+boo(true) 应该返回 true。<br/>
+boo(false) 应该返回 true。<br/>
+boo([1, 2, 3]) 应该返回 false。<br/>
+boo([].slice) 应该返回 false。<br/>
+boo({ "a": 1 }) 应该返回 false。<br/>
+boo(1) 应该返回 false。<br/>
+boo(NaN) 应该返回 false。<br/>
+boo("a") 应该返回 false。<br/>
+boo("true") 应该返回 false。<br/>
+boo("false") 应该返回 false。<br/>
 </p>
 <p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
+24,数组去重算法<br/>
+规则：<br/>
+写一个 function，传入两个或两个以上的数组，返回一个以给定的原始数组排序的不包含重复值的新数组。<br/>
+
+换句话说，所有数组中的所有值都应该以原始顺序被包含在内，但是在最终的数组中不包含重复值。<br/>
+
+非重复的数字应该以它们原始的顺序排序，但最终的数组不应该以数字顺序排序。<br/>
+
+请参照下面验证判断中的例子。<br/>
+思路：<br/>
+示例：<br/>
+function unite(arr1, arr2, arr3) {<br/>
+
+return arr1;<br/>
+}<br/>
+
+unite([1, 3, 2], [1, [5]], [2, [4]]);<br/>
+测试case：<br/>
+unite([1, 3, 2], [5, 2, 1, 4], [2, 1]) 应该返回 [1, 3, 2, 5, 4]。<br/>
+unite([1, 3, 2], [1, [5]], [2, [4]]) 应该返回 [1, 3, 2, [5], [4]]。<br/>
+unite([1, 2, 3], [5, 2, 1]) 应该返回 [1, 2, 3, 5]。<br/>
+unite([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]) 应该返回 [1, 2, 3, 5, 4, 6, 7, 8]。<br/>
 </p>
 <p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
+25,html符号转实体算法<br/>
+规则：<br/>
+将字符串中的字符 &、<、>、" （双引号）, 以及 ' （单引号）转换为它们对应的 HTML 实体。<br/>
+思路：<br/>
+示例：<br/>
+function convert(str) {<br/>
+// &colon;&rpar;
+
+
+return str;<br/>
+}<br/>
+
+convert("Dolce & <>Gabbana");<br/>
+convert('Stuff in "quotation marks"');<br/>
+测试case：<br/>
+convert("Dolce & Gabbana") 应该返回 Dolce &​amp; Gabbana。<br/>
+convert("Hamburgers < Pizza < Tacos") 应该返回 Hamburgers &​lt; Pizza &​lt; Tacos。<br/>
+convert("Sixty > twelve") 应该返回 Sixty &​gt; twelve。<br/>
+convert('Stuff in "quotation marks"') 应该返回 Stuff in &​quot;quotation marks&​quot;。<br/>
+convert("Shindler's List") 应该返回 Shindler&​apos;s List。<br/>
+convert("<>") 应该返回 &​lt;&​gt;。<br/>
+convert("abc") 应该返回 abc。<br/>
 </p>
 <p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
+26,字符串连接算法<br/>
+规则：<br/>
+将字符串转换为 spinal case。Spinal case 是 all-lowercase-words-joined-by-dashes 这种形式的，也就是以连字符连接所有小写单词。<br/>
+思路：<br/>
+示例：<br/>
+function spinalCase(str) {<br/>
+// "It's such a fine line between stupid, and clever."<br/>
+// --David St. Hubbins<br/>
+
+return str;<br/>
+}<br/>
+
+spinalCase("ThisIsSpinalTap");<br/>
+测试case：<br/>
+spinalCase("This Is Spinal Tap") 应该返回 "this-is-spinal-tap"。<br/>
+spinalCase("thisIsSpinalTap") 应该返回 "this-is-spinal-tap"。<br/>
+spinalCase("The_Andy_Griffith_Show") 应该返回 "the-andy-griffith-show"。<br/>
+spinalCase("Teletubbies say Eh-oh") 应该返回 "teletubbies-say-eh-oh"。<br/>
 </p>
 <p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
+27,斐波纳契奇数求和算法<br/>
+规则：<br/>
+给一个正整数num，返回小于或等于num的斐波纳契奇数之和。<br/>
+
+斐波纳契数列中的前几个数字是 1、1、2、3、5 和 8，随后的每一个数字都是前两个数字之和。<br/>
+
+例如，sumFibs(4)应该返回 5，因为斐波纳契数列中所有小于4的奇数是 1、1、3。<br/>
+
+提示：此题不能用递归来实现斐波纳契数列。因为当num较大时，内存会溢出，推荐用数组来实现。<br/>
+思路：<br/>
+示例：<br/>
+function sumFibs(num) {<br/>
+
+return num;<br/>
+}<br/>
+
+sumFibs(75025);<br/>
+测试case：<br/>
+sumFibs(1) 应该返回一个数字。<br/>
+sumFibs(1000) 应该返回 1785。<br/>
+sumFibs(4000000) 应该返回 4613732。<br/>
+sumFibs(4) 应该返回 5。<br/>
+sumFibs(75024) 应该返回 60696。<br/>
+sumFibs(75025) 应该返回 135721。<br/>
 </p>
 
 <p>
-6,寻找数组中的最大值算法
+28,质素求和算法<br/><br/>
+规则：<br/>
+求小于等于给定数值的质数之和。<br/>
+
+只有 1 和它本身两个约数的数叫质数。例如，2 是质数，因为它只能被 1 和 2 整除。1 不是质数，因为它只能被自身整除。<br/>
+
+给定的数不一定是质数。<br/>
+思路：<br/>
+示例：<br/>
+function sumPrimes(num) {<br/>
+
+return num;<br/>
+}<br/>
+
+sumPrimes(10);//17<br/>
+sumPrimes(977);//73156<br/>
+测试case：<br/>
+sumPrimes(10) 应该返回一个数字。<br/>
+sumPrimes(10) 应该返回 17。<br/>
+sumPrimes(977) 应该返回 73156<br/>
+</p>
+<p>
+29,最小公倍数算法<br/>
+规则：<br/>
+找出能被两个给定参数和它们之间的连续数字整除的最小公倍数。<br/>
+
+范围是两个数字构成的数组，两个数字不一定按数字顺序排序。<br/>
+
+例如对 1 和 3 —— 找出能被 1 和 3 和它们之间所有数字整除的最小公倍数。<br/>
+思路：<br/>
+示例：<br/>
+
+测试case：<br/>
+smallestCommons([1, 5]) 应该返回一个数字。<br/>
+smallestCommons([1, 5]) 应该返回 60。<br/>
+smallestCommons([5, 1]) 应该返回 60。<br/>
+smallestCommons([1, 13]) 应该返回 360360。<br/>
+</p>
+<p>
+30,数组验证算法<br/>
+规则：<br/>
+写一个 function，它浏览数组（第一个参数）并返回数组中第一个通过某种方法（第二个参数）验证的元素。<br/>
+思路：<br/>
+示例：<br/>
+function find(arr, func) {<br/>
+
+
+return arr;<br/>
+}<br/>
+
+find([1, 3,5,8,9,10], function(num){ return num % 2 === 0; });<br/>
+测试case：<br/>
+find([1, 3, 5, 8, 9, 10], function(num) { return num % 2 === 0; }) 应该返回 8。<br/>
+find([1, 3, 5, 9], function(num) { return num % 2 === 0; }) 应该返回 undefined。<br/>
+</p>
+<p>
+31,数组取值算法<br/>
+规则：<br/>
+让我们来丢弃数组(arr)的元素，从左边开始，直到回调函数return true就停止。<br/>
+
+第二个参数，func，是一个函数。用来测试数组的第一个元素，如果返回fasle，就从数组中抛出该元素(注意：此时数组已被改变)，继续测试数组的第一个元素，如果返回fasle，继续抛出，直到返回true。<br/>
+
+最后返回数组的剩余部分，如果没有剩余，就返回一个空数组。<br/>
+思路：<br/>
+示例：<br/>
+function drop(arr, func) {<br/>
+// Drop them elements.<br/>
+
+return arr;<br/>
+}<br/>
+
+drop([0, 1, 0, 1], function(n) {return n ===1; });<br/>
+测试case：<br/>
+drop([1, 2, 3, 4], function(n) {return n >= 3;}) 应该返回 [3, 4]。<br/>
+drop([0, 1, 0, 1], function(n) {return n === 1;}) 应该返回 [1, 0, 1]。<br/>
+drop([1, 2, 3], function(n) {return n > 0;}) 应该返回 [1, 2, 3]。<br/>
+drop([1, 2, 3, 4], function(n) {return n > 5;}) 应该返回 []。<br/>
+drop([1, 2, 3, 7, 4], function(n) {return n > 3;}) 应该返回 [7, 4]。<br/>
+drop([1, 2, 3, 9, 2], function(n) {return n > 2;}) 应该返回 [3, 9, 2]。<br/>
+</p>
+<p>
+32,数组简化算法<br/>
+规则：<br/>
+对嵌套的数组进行扁平化处理。你必须考虑到不同层级的嵌套<br/>
+思路：<br/>
+示例：<br/>
+function steamroller(arr) {<br/>
+// I'm a steamroller, baby<br/>
+
+
+return arr;<br/>
+}<br/>
+
+steamroller([1, [2], [3, [[4]]]]);<br/>
+测试case：<br/>
+steamroller([[["a"]], [["b"]]]) 应该返回 ["a", "b"]。<br/>
+steamroller([1, [2], [3, [[4]]]]) 应该返回 [1, 2, 3, 4]。<br/>
+steamroller([1, [], [3, [[4]]]]) 应该返回 [1, 3, 4]。<br/>
+steamroller([1, {}, [3, [[4]]]]) 应该返回 [1, {}, 3, 4]<br/>
+</p>
+<p>
+33,二进制转字符算法<br/>
+规则：<br/>
+传入二进制字符串，翻译成英语句子并返回。<br/>
+
+二进制字符串是以空格分隔的。<br/>
+思路：<br/>
+示例：<br/>
+function binaryAgent(str) {<br/>
+
+return arr;<br/>
+}<br/>
+
+binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");<br/>
+测试case：<br/>
+binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111") 应该返回 "Aren't bonfires fun!?"<br/>
+binaryAgent("01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000110 01110010 01100101 01100101 01000011 01101111 01100100 01100101 01000011 01100001 01101101 01110000 00100001") 应该返回 "I love FreeCodeCamp!"<br/>
+</p>
+<p>
+34,数组元素判断算法<br/>
+规则：<br/>
+完善编辑器中的every函数，如果集合(collection)中的所有对象都存在对应的属性(pre)，并且属性(pre)对应的值为真。函数返回ture。反之，返回false。<br/>
+
+记住：你只能通过中括号来访问对象的变量属性(pre)。<br/>
+思路：<br/>
+示例：<br/>
+function every(collection, pre) {<br/>
+// Is everyone being true?<br/>
+
+return res;<br/>
+}<br/>
+
+every([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex");<br/>
+测试case：<br/>
+every([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex") 应该返回 true。<br/>
+every([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex") 应该返回 false。<br/>
+every([{"user": "Tinky-Winky", "sex": "male", "age": 0}, {"user": "Dipsy", "sex": "male", "age": 3}, {"user": "Laa-Laa", "sex": "female", "age": 5}, {"user": "Po", "sex": "female", "age": 4}], "age") 应该返回 false。<br/>
+every([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true}, {"name": "FastFoward", "onBoat": null}], "onBoat") 应该返回 false<br/>
+every([{"name": "Pete", "onBoat": true}, {"name": "Repeat", "onBoat": true, "alias": "Repete"}, {"name": "FastFoward", "onBoat": true}], "onBoat") 应该返回 true<br/>
+every([{"single": "yes"}], "single") 应该返回 true<br/>
+every([{"single": ""}, {"single": "double"}], "single") 应该返回 false<br/>
+every([{"single": "double"}, {"single": undefined}], "single") 应该返回 false<br/>
+every([{"single": "double"}, {"single": NaN}], "single") 应该返回 false<br/>
+</p>
+<p>
+35,函数迭代可选参数算法<br/>
+规则：<br/>
+创建一个计算两个参数之和的 function。如果只有一个参数，则返回一个 function，该 function 请求一个参数然后返回求和的结果。<br/>
+
+例如，add(2, 3) 应该返回 5，而 add(2) 应该返回一个 function。<br/>
+
+调用这个有一个参数的返回的 function，返回求和的结果：<br/>
+
+var sumTwoAnd = add(2);<br/>
+
+sumTwoAnd(3) 返回 5。<br/>
+
+如果两个参数都不是有效的数字，则返回 undefined。<br/>
+思路：<br/>
+示例：<br/>
+function add() {<br/>
+
+
+return true;<br/>
+}<br/>
+
+add(2,"3");<br/>
+测试case：<br/>
+add(2, 3) 应该返回 5。<br/>
+add(2)(3) 应该返回 5。<br/>
+add("http://bit.ly/IqT6zt") 应该返回 undefined。<br/>
+add(2, "3") 应该返回 undefined。<br/>
+add(2)([3]) 应该返回 undefined。<br/>
+</p>
+--------------------以上为中级----------------------------<br/>
+<p>
+36,判断电话号码算法<br/>
+规则：<br/>
+如果传入字符串是一个有效的美国电话号码，则返回 true.<br/>
+
+用户可以在表单中填入一个任意有效美国电话号码. 下面是一些有效号码的例子(还有下面测试时用到的一些变体写法):<br/>
+
+555-555-5555<br/>
+(555)555-5555<br/>
+(555) 555-5555<br/>
+555 555 5555<br/>
+5555555555<br/>
+1 555 555 5555<br/>
+在本节中你会看见如 800-692-7753 or 8oo-six427676;laskdjf这样的字符串. 你的任务就是验证前面给出的字符串是否是有效的美国电话号码. 区号是必须有的. 如果字符串中给出了国家代码, 你必须验证其是 1.如果号码有效就返回 true ; 否则返回 false.<br/>
+思路：<br/>
+示例：<br/>
+function telephoneCheck(str) {<br/>
+// Good luck!<br/>
+
+return str;<br/>
+}<br/>
+
+
+
+telephoneCheck("555-555-5555");<br/>
+测试case：<br/>
+telephoneCheck("555-555-5555") 应该返回一个布尔值.<br/>
+telephoneCheck("1 555-555-5555") 应该返回 true.<br/>
+telephoneCheck("1 (555) 555-5555") 应该返回 true.<br/>
+telephoneCheck("5555555555") 应该返回 true.<br/>
+telephoneCheck("555-555-5555") 应该返回 true.<br/>
+telephoneCheck("(555)555-5555") 应该返回 true.<br/>
+telephoneCheck("1(555)555-5555") 应该返回 true.<br/>
+telephoneCheck("1 555)555-5555") 应该返回 false.<br/>
+telephoneCheck("1 555 555 5555") 应该返回 true.<br/>
+telephoneCheck("1 456 789 4444") 应该返回 true.<br/>
+telephoneCheck("123**&!!asdf#") 应该返回 false.<br/>
+telephoneCheck("55555555") 应该返回 false.<br/>
+telephoneCheck("(6505552368)") 应该返回 false<br/>
+telephoneCheck("2 (757) 622-7382") 应该返回 false.<br/>
+telephoneCheck("0 (757) 622-7382") 应该返回 false.<br/>
+telephoneCheck("-1 (757) 622-7382") 应该返回 false<br/>
+telephoneCheck("2 757 622-7382") 应该返回 false.<br/>
+telephoneCheck("10 (757) 622-7382") 应该返回 false.<br/>
+telephoneCheck("27576227382") 应该返回 false.<br/>
+telephoneCheck("(275)76227382") 应该返回 false.<br/>
+telephoneCheck("2(757)6227382") 应该返回 false.<br/>
+telephoneCheck("2(757)622-7382") 应该返回 false.<br/>
+telephoneCheck("555)-555-5555") 应该返回 false.<br/>
+telephoneCheck("(555-555-5555") 应该返回 false.<br/>
+</p>
+<p>
+37,集合交集算法<br/>
+规则：<br/>
+创建一个函数，接受两个或多个数组，返回所给数组的 对等差分(symmetric difference) (△ or ⊕)数组.<br/>
+
+给出两个集合 (如集合 A = {1, 2, 3} 和集合 B = {2, 3, 4}), 而数学术语 "对等差分" 的集合就是指由所有只在两个集合其中之一的元素组成的集合(A △ B = C = {1, 4}). 对于传入的额外集合 (如 D = {2, 3}), 你应该安装前面原则求前两个集合的结果与新集合的对等差分集合 (C △ D = {1, 4} △ {2, 3} = {1, 2, 3, 4}).<br/>
+思路：<br/>
+示例：<br/>
+function sym() {<br/>
+
+return [];<br/>
+}<br/>
+
+sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]);<br/>
+测试case：<br/>
+sym([1, 2, 3], [5, 2, 1, 4]) 应该返回 [3, 4, 5].<br/>
+sym([1, 2, 3], [5, 2, 1, 4]) 应该只包含三个元素.<br/>
+sym([1, 2, 5], [2, 3, 5], [3, 4, 5]) 应该返回 [1, 4, 5]<br/>
+sym([1, 2, 5], [2, 3, 5], [3, 4, 5]) 应该只包含三个元素.<br/>
+sym([1, 1, 2, 5], [2, 2, 3, 5], [3, 4, 5, 5]) 应该返回 [1, 4, 5].<br/>
+sym([1, 1, 2, 5], [2, 2, 3, 5], [3, 4, 5, 5]) 应该只包含三个元素.<br/>
+sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3]) 应该返回 [2, 3, 4, 6, 7].<br/>
+sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3]) 应该只包含五个元素.<br/>
+sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]) 应该返回 [1, 2, 4, 5, 6, 7, 8, 9].<br/>
+sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]) 应该只包含八个元素.<br/>
+</p>
+<p>
+38,
 规则：
 思路：
 示例：
 测试case：
 </p>
 <p>
-6,寻找数组中的最大值算法
+39,
 规则：
 思路：
 示例：
 测试case：
 </p>
 <p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
-</p>
-<p>
-6,寻找数组中的最大值算法
-规则：
-思路：
-示例：
-测试case：
-</p>
-<p>
-6,寻找数组中的最大值算法
+40,
 规则：
 思路：
 示例：

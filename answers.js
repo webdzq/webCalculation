@@ -407,3 +407,359 @@ function fearNotLetter(str) {
 }
 
 fearNotLetter("abce");
+
+//23,输入检查算法
+function boo(bool) {
+    // What is the new fad diet for ghost developers? The Boolean.
+
+    return Object.prototype.toString.call(bool) == '[object Boolean]';
+}
+
+boo(null);
+//24,数组去重算法
+function unite(arr1, arr2, arr3) {
+    var args = Array.prototype.slice.call(arguments);
+
+    var arr = args.reduce(function(pre, next) {
+        return pre.concat(next);
+    });
+    var tmpobj = {};
+    var narr = [];
+    console.log(arr, args);
+    arr.forEach(function(item, index) {
+        if (!tmpobj[item]) {
+            tmpobj[item] = 1;
+            narr.push(item);
+        }
+    });
+    return narr;
+}
+
+unite([1, 3, 2], [1, [5]], [2, [4]]);
+//25,html符号转实体算法
+function convert(str) {
+    // &colon;&rpar;
+    var nstr = str.replace(/[&<>\"\']/g, function(word) {
+        console.log(word, word.charCodeAt(), word == '>', arguments);
+        if (word == '&') {
+            return '&amp;';
+        } else if (word == '>') {
+            return '&gt;';
+        } else if (word == '<') {
+            return '&lt;';
+        } else if (word == "'") {
+            return '&apos;';
+        } else if (word == '"') {
+            return '&quot;';
+        }
+    });
+    return nstr;
+}
+
+convert("Dolce & <>Gabbana");
+convert('Stuff in "quotation marks"');
+//26,字符串连接算法
+function spinalCase(str) {
+    // "It's such a fine line between stupid, and clever."
+    // --David St. Hubbins
+    var nnstr = str.replace(/([a-z])([A-Z])/g, "$1-$2");
+    var nstr = nnstr.replace(/\w+/g, function(word) {
+        console.log(word);
+        return word.toLowerCase();
+    });
+    var nstr2 = nstr.replace(/[\s_]/g, function(word) {
+        console.log(word);
+        return "-";
+    });
+    return nstr2;
+}
+
+spinalCase("ThisIsSpinalTap");
+//27,斐波纳契奇数求和算法
+function sumFibs(num) {
+    var arr = [1, 1];
+    var a = 1; //前一个数
+    var b = 1; //后一个数
+    var narr = [];
+    for (var i = 0; i < num; i++) {
+        b = a + b;
+        a = b - a;
+        if (b <= num) {
+            arr.push(b);
+        } else {
+            break;
+        }
+
+    }
+    console.log("arr=", arr);
+    arr.forEach(function(item, index) {
+        if (item % 2 !== 0) {
+            narr.push(item);
+        }
+    });
+    var sum = narr.reduce(function(pre, next) {
+        return pre + next;
+    });
+    console.log("narr=", narr);
+    return sum;
+}
+
+sumFibs(75025);
+//28,质素求和算法
+function sumPrimes(num) {
+    var arr = [];
+    for (var i = 2; i <= num; i++) {
+        var j = 2;
+
+        while (i % j !== 0) {
+            j++;
+
+        }
+        if (j == i) {
+            arr.push(i);
+        }
+    }
+    console.log(arr);
+    var sum = arr.reduce(function(pre, next) {
+        return pre + next;
+    });
+    return sum;
+}
+
+sumPrimes(10); //17
+sumPrimes(977); //73156
+
+//29,最小公倍数算法
+function smallestCommons(arr) {
+    arr.sort();
+    var num = arr[1] - arr[0];
+    var narr = [];
+    for (var i = 1; i <= num; i++) {
+        narr.push(arr[0] + i);
+    }
+
+    function abc(a, b) {
+        if (a === 0) return b;
+        return abc(b % a, a);
+    }
+    console.log(narr);
+    var scsum = narr.reduce(function(pre, next) {
+        return pre * next / abc(pre, next);
+    });
+    return scsum;
+}
+
+
+smallestCommons([1, 5]);
+smallestCommons([5, 1]);
+//30,数组验证算法
+function find(arr, func) {
+
+    var narr = [];
+    var len = arr.length;
+    var count = 0;
+    var res = 0;
+    arr.forEach(function(item, index) {
+        if (func(item)) {
+            //narr.push(item);
+            count++;
+            console.log(item);
+            if (count == 1) {
+                res = item;
+            }
+
+        }
+
+    });
+    if (count === 0) {
+        res = undefined;
+    }
+    return res;
+}
+
+find([1, 3, 5, 8, 9, 10], function(num) {
+    return num % 2 === 0;
+});
+//31,数组取值算法
+function drop(arr, func) {
+    // Drop them elements.
+    var narr = [];
+    var count = 0;
+    arr.forEach(function(item, index) {
+        var res = func(item);
+        console.log(item, index);
+        if (!!res) {
+            count++;
+            if (count == 1) {
+                narr = arr.slice(index);
+            }
+
+        }
+    });
+    return narr;
+}
+
+drop([0, 1, 0, 1], function(n) {
+    return n === 1;
+});
+//32,数组简化算法
+function steamroller(arr) {
+    // I'm a steamroller, baby
+    function isArray(obj) {
+        return Object.prototype.toString.call(obj) === '[object  Array]';
+    }
+    var narr = [];
+
+    function abc(varr) {
+        varr.forEach(function(item, index) {
+            if (Array.isArray(item)) {
+                abc(item);
+            } else {
+                narr.push(item);
+            }
+        });
+    }
+    abc(arr);
+
+    return narr;
+}
+
+steamroller([1, [2],
+    [3, [
+        [4]
+    ]]
+]);
+//33,二进制转字符算法
+function binaryAgent(str) {
+    var arr = str.split(' ');
+
+    var narr = arr.map(function(item, index) {
+        var code = parseInt(item, 2);
+
+        var char = String.fromCharCode(code);
+        console.log(code, char);
+        return char;
+    });
+    return narr.join('');
+}
+
+binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");
+//34，数组元素判断算法
+function every(collection, pre) {
+    // Is everyone being true?
+    var res = collection.every(function(elem, index) {
+        return elem[pre];
+    });
+    return res;
+}
+
+every([{
+    "user": "Tinky-Winky",
+    "sex": "male"
+}, {
+    "user": "Dipsy",
+    "sex": "male"
+}, {
+    "user": "Laa-Laa",
+    "sex": "female"
+}, {
+    "user": "Po",
+    "sex": "female"
+}], "sex");
+//35,函数迭代可选参数算法
+function add() {
+    var args = Array.prototype.slice.call(arguments);
+    var res = args.every(function(elem, index) {
+        return Object.prototype.toString.call(elem) == '[object Number]';
+    });
+    if (!res) {
+        res = undefined;
+    } else if (args.length == 1) {
+        res = function(tmp) {
+
+            return add(args[0], tmp);
+        };
+    } else if (args.length == 2) {
+        res = args[0] + args[1];
+    }
+
+    return res;
+}
+
+add(2, "3");
+//36,判断电话号码算法
+function telephoneCheck(str) {
+    // Good luck!--这个正则写的有点多，可优化
+    var reg = /^\d{3}-\d{3}-\d{4}|\d{3} \d{3} \d{4}|(\d)\1{9}|^[1 ]*\(\d{3}\)[ ]?\d{3}-\d{4}|1 \d{3}[ -]\d{3}[ -]\d{4}/g;
+
+    return reg.test(str);
+}
+
+
+
+telephoneCheck("555-555-5555");
+//37,集合交集算法
+function sym(args) {
+    //基本思路：去重，合并，去重，递归下一个。每次只能操作前两个，递归是为了把所有参数都操作一次。
+    console.log(args);
+
+    var argsarr1 = Array.prototype.slice.call(arguments);
+
+    function abc(argsarr) {
+        var obj = {};
+        var obj2 = [];
+        var zarr = [];
+        var tmparr = argsarr.splice(0, 2);
+        var len = argsarr.length;
+        console.log("tmparr[0]", tmparr[0]);
+        for (var g = 0; g < tmparr[0].length; g++) {
+            var itemg = tmparr[0][g];
+            if (!obj[itemg]) {
+                obj[itemg] = 1;
+            } else {
+                tmparr[0].splice(g, 1);
+                g--;
+            }
+        }
+        obj = {};
+        console.log("tmparr[1]", tmparr[1]);
+        for (var m = 0; m < tmparr[1].length; m++) {
+            var itemm = tmparr[1][m];
+            if (!obj[itemm]) {
+                obj[itemm] = 1;
+            } else {
+                tmparr[1].splice(m, 1);
+                m--;
+            }
+        }
+        obj = {};
+        var narr = tmparr[0].concat(tmparr[1]).sort();
+        console.log("narr", narr);
+        for (var i = 0; i < narr.length; i++) {
+            var item = narr[i];
+            if (!obj[item]) {
+                obj[item] = 1;
+            } else {
+                obj2[item] = 1;
+            }
+        }
+        for (var j = 0; j < narr.length; j++) {
+            var itemj = narr[j];
+            if (!obj2[itemj]) {
+                zarr.push(itemj);
+            }
+        }
+        console.log(zarr, argsarr, arguments, len);
+
+        if (len > 0) {
+            argsarr.unshift(zarr);
+            return abc(argsarr);
+        }
+        return zarr;
+    }
+
+    var abcarr = abc(argsarr1);
+    return abcarr;
+}
+
+sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]);
