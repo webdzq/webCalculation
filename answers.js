@@ -763,3 +763,72 @@ function sym(args) {
 }
 
 sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]);
+//38,类及对象构建算法
+var Person = function(firstAndLast) {
+
+    var full = firstAndLast || '';
+    var arr = [];
+    var first = '';
+    var last = '';
+    var init = function(vfull) {
+        arr = vfull.split(' ');
+        first = arr[0];
+        last = arr[1];
+    };
+
+    this.getFirstName = function() {
+        return first;
+    };
+    this.getLastName = function() {
+        return last;
+    };
+    this.getFullName = function() {
+        return full;
+    };
+    this.setFirstName = function(vfirst) {
+        first = vfirst;
+        full = first + ' ' + last;
+    };
+    this.setLastName = function(vlast) {
+        last = vlast;
+        full = first + ' ' + last;
+    };
+    this.setFullName = function(vfull) {
+        full = vfull;
+        init(full);
+    };
+    init(full);
+    return this;
+};
+
+var bob = new Person('Bob Ross');
+bob.getFullName();
+//39,数据组合求值算法
+function pairwise(arr, arg) {
+    var varr = [];
+    var res = 0;
+    var len = arr.length;
+    for (var j = 0; j < len; j++) {
+        var item = arr[j];
+        console.log("item...", item);
+        for (var i = j + 1; i < len; i++) {
+
+            if (item + arr[i] == arg) {
+                varr.push(j, i);
+                arr[j] = arr[i] = arg + 1; //修改已经遍历过的值
+                break;
+            }
+
+        }
+    }
+    if (varr.length === 0) {
+        return res;
+    }
+    res = varr.reduce(function(pre, next) {
+        return pre + next;
+    });
+    return res;
+}
+
+pairwise([1, 4, 2, 3, 0, 5], 100);
+//40,

@@ -901,18 +901,65 @@ sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]) �
 sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]) 应该只包含八个元素.<br/>
 </p>
 <p>
-38,
-规则：
-思路：
-示例：
-测试case：
+38,类及对象构建算法<br/>
+规则：<br/>
+用下面给定的方法构造一个对象.<br/>
+
+方法有 getFirstName(), getLastName(), getFullName(), setFirstName(first), setLastName(last), and setFullName(firstAndLast).<br/>
+
+所有有参数的方法只接受一个字符串参数.<br/>
+
+所有的方法只与实体对象交互.<br/>
+思路：<br/>
+示例：<br/>
+var Person = function(firstAndLast) {<br/>
+
+return firstAndLast;<br/>
+};<br/>
+
+var bob = new Person('Bob Ross');<br/>
+bob.getFullName();<br/>
+测试case：<br/>
+Object.keys(bob).length 应该返回 6.<br/>
+bob instanceof Person 应该返回 true.<br/>
+bob.firstName 应该返回 undefined.<br/>
+bob.lastName 应该返回 undefined.<br/>
+bob.getFirstName() 应该返回 "Bob".<br/>
+bob.getLastName() 应该返回 "Ross".<br/>
+bob.getFullName() 应该返回 "Bob Ross".<br/>
+bob.getFullName() 应该返回 "Haskell Ross" after bob.setFirstName("Haskell").<br/>
+bob.getFullName() 应该返回 "Haskell Curry" after bob.setLastName("Curry").<br/>
+bob.getFullName() 应该返回 "Haskell Curry" 在 bob.setFullName("Haskell Curry") 之后.<br/>
+bob.getFirstName() 应该返回 "Haskell" 在 bob.setFullName("Haskell Curry") 之后.<br/>
+bob.getLastName() 应该返回 "Curry" 在 bob.setFullName("Haskell Curry") 之后.<br/>
 </p>
 <p>
-39,
-规则：
-思路：
-示例：
-测试case：
+39,数据组合求值算法<br/>
+规则：<br/>
+举个例子：有一个能力数组[7,9,11,13,15]，按照最佳组合值为20来计算，只有7+13和9+11两种组合。而7在数组的索引为0，13在数组的索引为3，9在数组的索引为1，11在数组的索引为2。<br/>
+
+所以我们说函数：pairwise([7,9,11,13,15],20) 的返回值应该是0+3+1+2的和，即6。<br/>
+
+我们可以通过表格来更直观地查看数组中索引和值的关系：<br/>
+
+Index	0	1	2	3	4<br/>
+Value	7	9	11	13	15<br/>
+任务：帮右边的pairwise函数实现上面的功能。<br/>
+思路：<br/>
+示例：<br/>
+function pairwise(arr, arg) {<br/>
+
+
+return arr;<br/>
+}<br/>
+
+pairwise([1, 4, 2, 3, 0, 5], 100);<br/>
+测试case：<br/>
+pairwise([1, 4, 2, 3, 0, 5], 7) 应该返回 11.<br/>
+pairwise([1, 3, 2, 4], 4) 应该返回 1.<br/>
+pairwise([1, 1, 1], 2) 应该返回 1.<br/>
+pairwise([0, 0, 0, 0, 1, 1], 1) 应该返回 10.<br/>
+pairwise([], 100) 应该返回 0.<br/>
 </p>
 <p>
 40,
