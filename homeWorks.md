@@ -969,9 +969,97 @@ pairwise([0, 0, 0, 0, 1, 1], 1) 应该返回 10.<br/>
 pairwise([], 100) 应该返回 0.<br/>
 </p>
 <p>
-40,
+40,复杂json数据处理算法
 [规则：]
+虽说数据处理是归后端的。可是有些场景还需要前端做微调。
+后端传递一个复杂的json数据，前端需要做如下处理：
+1，有children的父节点添加属性nocheck=true。
+2，已经选中的数据(通过name值相同来判断)添加属性checked = true;
+举例：
+这条数据var data=[{
+    id: '1',
+    name: 'node1',
+    children: [{
+        id: '1-1',
+        name: 'node1-1'
+    }, {
+        id: '1-2',
+        name: 'node1'
+    }]
+}, {
+    id: '2',
+    name: 'node2'
+}], [{
+    id: '1-1',
+    name: 'node1-1'
+}];如果默认选中name=node1-1,
+处理后，应该返回[{
+    id: '1',
+    name: 'node1',
+    nocheck:true,
+    children: [{
+        id: '1-1',
+        name: 'node1-1'
+    }, {
+        id: '1-2',
+        name: 'node1',
+        checked:true
+    }]
+}, {
+    id: '2',
+    name: 'node2'
+}], [{
+    id: '1-1',
+    name: 'node1-1'
+}]
 [思路：]
 [示例：]
+function jsonHandle(vtreeData, vknowTextJson) {
+
+  return vtreeData;
+}
 [测试case：]
+var data=[{
+    id: '1',
+    name: 'node1',
+    children: [{
+        id: '1-1',
+        name: 'node1-1'
+    }, {
+        id: '1-2',
+        name: 'node1'
+    }]
+}, {
+    id: '2',
+    name: 'node2'
+}], [{
+    id: '1-1',
+    name: 'node1-1'
+}];<br/>返回var data=[{
+    id: '1',
+    name: 'node1',
+    nocheck:true,
+    children: [{
+        id: '1-1',
+        checked:true,
+        name: 'node1-1'
+    }, {
+        id: '1-2',
+        name: 'node1',
+        nocheck:true,
+        children: [{
+            id: '1-2-1',
+            name: 'node1-2-1'
+        }, {
+            id: '1-2-2',
+            name: 'node1-2-2'
+        }
+    }]
+}, {
+    id: '2',
+    name: 'node2'
+}], [{
+    id: '1-1',
+    name: 'node1-1'
+}];
 </p>

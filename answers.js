@@ -831,4 +831,51 @@ function pairwise(arr, arg) {
 }
 
 pairwise([1, 4, 2, 3, 0, 5], 100);
-//40,
+//40,复杂json数据处理算法
+function jsonHandle(vtreeData, vknowTextJson) {
+    //递归函数：优化数据，父节点去掉checkbox，只有叶子节点才有checkbox
+    //vknowTextJson,默认勾选的
+    var data = vtreeData || [];
+    var knowTextJson = vknowTextJson || [];
+    var me = this;
+    function abc(vdata) {
+        var data = vdata || [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            (function(item) {
+                //已有知识点设置选中
+                for (var k = 0, len = knowTextJson.length; k < len; k++) {
+                    var itemk = knowTextJson[k];
+                    if (itemk.name == item.name) {
+                        item.checked = true;
+                    }
+                }
+                //父节点去掉checkbox
+                if (item.hasOwnProperty('children') && item.children.length > 0) {
+                    item.nocheck = true; //父节点添加属性nocheck
+                    abc(item.children);
+                }
+            })(item);
+        }
+        return data;
+    }
+    return abc(data);
+
+}
+jsonHandle([{
+    id: '1',
+    name: 'node1',
+    children: [{
+        id: '1-1',
+        name: 'node1-1'
+    }, {
+        id: '1-2',
+        name: 'node1'
+    }]
+}, {
+    id: '2',
+    name: 'node2'
+}], [{
+    id: '1-1',
+    name: 'node1-1'
+}]);
