@@ -834,7 +834,7 @@ pairwise([1, 4, 2, 3, 0, 5], 100);
 //40,复杂json数据处理算法
 function jsonHandle(vtreeData, vknowTextJson) {
     //递归函数：优化数据，父节点去掉checkbox，只有叶子节点才有checkbox
-    //vknowTextJson,默认勾选的
+    //vknowTextJson,默认选中的
     var data = vtreeData || [];
     var knowTextJson = vknowTextJson || [];
     var me = this;
