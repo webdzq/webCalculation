@@ -619,3 +619,4 @@ console.log("Number of entries: " + pbook.count()); print("David's extension: " 
 pbook.clear();
 console.log("Number of entries: " + pbook.count());
 //练习略
+//7,散列- 一种常用的数据存储技术,散列后的数据可以快速地插入或取用。散列使用的数据结构叫做散列表
