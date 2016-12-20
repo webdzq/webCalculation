@@ -612,11 +612,291 @@ function clear() {
 }
 //测试程序
 var pbook = new Dictionary();
-var pbook = new Dictionary(); pbook.add("Raymond","123");
+var pbook = new Dictionary();
+pbook.add("Raymond", "123");
 pbook.add("David", "345");
 pbook.add("Cynthia", "456");
-console.log("Number of entries: " + pbook.count()); print("David's extension: " + pbook.find("David")); pbook.showAll();
+console.log("Number of entries: " + pbook.count());
+print("David's extension: " + pbook.find("David"));
+pbook.showAll();
 pbook.clear();
 console.log("Number of entries: " + pbook.count());
 //练习略
 //7,散列- 一种常用的数据存储技术,散列后的数据可以快速地插入或取用。散列使用的数据结构叫做散列表
+//[1]碰撞：存在将两个键映射成同一个值的现象。
+//[2]数组长度：最好是质数，减小碰撞发生的概率。
+
+function HashTable() {
+    this.table = new Array(137);
+    this.simpleHash = simpleHash;
+    this.betterHash = betterHash;
+    this.showDistro = showDistro;
+    this.put = put;
+    this.get = get;
+}
+
+function put(key, vdata) {
+    var data = vdata || key;
+    var pos = this.betterHash(key);
+    this.table[pos] = data;
+}
+
+function get(key) {
+    return this.table[this.betterHash(key)];
+}
+
+function simpleHash(data) {
+    //这个产生键值的算法，容易产生碰撞，如字符串 "Clayton" 和 "Raymond" 的散列值是一样的。
+    var total = 0;
+    for (var i = 0; i < data.length; ++i) {
+        total += data.charCodeAt(i);
+    }
+    console.log("Hash value: " + data + " -> " + total);
+    return total % this.table.length;
+}
+
+function showDistro() {
+    var n = 0;
+    for (var i = 0; i < this.table.length; ++i) {
+        if (this.table[i] != undefined) {
+            console.log(i + ": " + this.table[i]);
+        }
+    }
+}
+
+function betterHash(string) {
+    //优化后的散列值算法，减少碰撞的发生
+    var H = 37; //常量
+    var total = 0;
+    for (var i = 0; i < string.length; ++i) {
+        total += H * total + string.charCodeAt(i);
+    }
+    total = total % this.table.length;
+    if (total < 0) {
+        total += this.table.length - 1;
+    }
+    return parseInt(total);
+}
+//7-1,碰撞的解决办法
+//[1]:开链法:在创建存储散列过的键值的数组时,通过调用一个函数创建一个新 的空数组,然后将该数组赋给散列表里的每个数组元素。这样就创建了一个二维数组
+function buildChains() {
+    for (var i = 0; i < this.table.length; ++i) {
+        this.table[i] = new Array();
+    }
+}
+
+function showDistro() {
+    //重写
+    var n = 0;
+    for (var i = 0; i < this.table.length; ++i) {
+        if (this.table[i][0] != undefined) {
+            console.log(i + ": " + this.table[i]);
+        }
+    }
+}
+
+function put(key, data) {
+    var pos = this.betterHash(key);
+    var index = 0;
+
+    while (this.table[pos][index] != undefined) {
+        ++index;
+    }
+    this.table[pos][index] = data;
+
+}
+
+function get(key) {
+    var index = 0;
+    var pos = this.betterHash(key);
+    var len = this.table[pos].length;
+    while (index < len && this.table[pos][index] != key) {
+
+        index++;
+    }
+    return this.table[pos][index];
+}
+//测试用例：
+var hTable = new HashTable();
+hTable.buildChains = buildChains;
+hTable.buildChains();
+var someNames = ["David", "Jennifer", "Donnie", "Raymond",
+    "Cynthia", "Mike", "Clayton", "Danny", "Jonathan"
+];
+for (var i = 0; i < someNames.length; ++i) {
+    hTable.put(someNames[i], someNames[i]);
+}
+hTable.showDistro();
+console.log(hTable.get('Jonathan'));
+//[2]:线性探测法:当发生碰撞时,线性探测法检查散列表中的下一个位置是否为空。如果为空, 就将数据存入该位置.不为空，继续next。直到空位置。
+var hTable = new HashTable();
+hTable.values = [];
+
+function put(key, data) {
+    var pos = this.betterHash(key);
+
+    while (this.table[pos] != undefined) {
+        pos++;
+    }
+
+    this.table[pos] = key;
+    this.values[pos] = data;
+
+}
+
+function get(key) {
+    var hash = -1;
+    hash = this.betterHash(key);
+    if (hash > -1) {
+        for (var i = hash; this.table[hash] != undefined; i++) {
+            if (this.table[hash] == key) {
+                return this.values[hash];
+            }
+        }
+    }
+    return undefined;
+}
+//测试用例
+var someNames = ["David", "Jennifer", "Donnie", "Raymond",
+    "Cynthia", "Mike", "Clayton", "Danny", "Jonathan"
+];
+for (var i = 0; i < someNames.length; ++i) {
+    hTable.put(someNames[i], someNames[i]);
+}
+hTable.showDistro();
+console.log(hTable.get('Jonathan'));
+
+//练习 略
+//8,集合：一种包含不同元素的数据结构，有两个特性：不同元素和无序。
+// [1]并集
+// [2]交集
+// [3]补集
+function Set() {
+    this.dataStore = [];
+    this.add = add;
+    this.remove = remove;
+    this.size = size;
+    this.union = union;
+    this.intersect = intersect;
+    this.subset = subset;
+    this.difference = difference;
+    this.show = show;
+}
+
+function add(data) {
+    if (this.dataStore.indexOf(data) < 0) {
+        this.dataStore.push(data);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function remove(data) {
+    var pos = this.dataStore.indexOf(data);
+    if (pos > -1) {
+        this.dataStore.splice(pos, 1);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function show() {
+    return this.dataStore;
+}
+
+function contains(data) {
+    if (this.dataStore.indexOf(data) > -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function union(set) {
+    //并集
+    var tempSet = new Set();
+    for (var i = 0; i < this.dataStore.length; ++i) {
+        tempSet.add(this.dataStore[i]);
+    }
+    for (var i = 0; i < set.dataStore.length; ++i) {
+        if (!tempSet.contains(set.dataStore[i])) {
+            tempSet.dataStore.push(set.dataStore[i]);
+        }
+    }
+    return tempSet;
+}
+
+function intersect(set) {
+    //交集操作
+    var tempSet = new Set();
+    for (var i = 0; i < this.dataStore.length; ++i) {
+        if (set.contains(this.dataStore[i])) {
+            tempSet.add(this.dataStore[i]);
+        }
+    }
+    return tempSet;
+}
+
+function size() {
+    return this.dataStore.length;
+}
+
+function subset(set) {
+    //子集
+    if (this.size() > set.size()) {
+
+        return false;
+    } else {
+        for(var member in this.dataStore) {
+            if (!set.contains(member)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function difference(set) {
+    //补集操作
+    var tempSet = new Set();
+    for (var i = 0; i < this.dataStore.length; ++i) {
+        if (!set.contains(this.dataStore[i])) {
+            tempSet.add(this.dataStore[i]);
+        }
+    }
+    return tempSet;
+}
+//测试用例：
+var cis = new Set();
+var it = new Set();
+cis.add("Clayton");
+cis.add("Jennifer");
+cis.add("Danny");
+cis.add("Bryan");
+cis.add("Bryanw");
+cis.add("Danny");
+it.add("Bryan");
+it.add("Clayton");
+it.add("Jennifer");
+//并集
+var un = new Set();
+un = cis.union(it);
+console.log("并集=", un.show());
+//交集
+var inter = cis.intersect(it);
+consloe.log("交集=", inter.show()); // 显示 Raymond
+//子集
+var dmp = new Set();
+dmp.add("Bryan");
+
+if (dmp.subset(it)) {
+    console.log("dmp is a subset of it");
+} else {
+    console.log("DMP is not a subset of IT.");
+}
+//补集
+var diff = new Set();
+diff = cis.difference(it);
+console.log("补集=", diff.show());
