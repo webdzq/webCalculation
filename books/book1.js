@@ -780,6 +780,7 @@ function Set() {
     this.intersect = intersect;
     this.subset = subset;
     this.difference = difference;
+    this.contains = contains;
     this.show = show;
 }
 
@@ -849,7 +850,7 @@ function subset(set) {
 
         return false;
     } else {
-        for(var member in this.dataStore) {
+        for (var member in this.dataStore) {
             if (!set.contains(member)) {
                 return false;
             }
@@ -886,7 +887,7 @@ un = cis.union(it);
 console.log("并集=", un.show());
 //交集
 var inter = cis.intersect(it);
-consloe.log("交集=", inter.show()); // 显示 Raymond
+console.log("交集=", inter.show()); // 显示 Raymond
 //子集
 var dmp = new Set();
 dmp.add("Bryan");
@@ -900,3 +901,212 @@ if (dmp.subset(it)) {
 var diff = new Set();
 diff = cis.difference(it);
 console.log("补集=", diff.show());
+//9，二叉树和二叉查找树：一种非线性的数据结构，用来存储具有层级关系的数据
+// 边： 每个方框都是一个节点, 连接方框 的线
+// 路径： 从一个节点到另一个节点的这一组边
+// 树的深度： 树的层数。 根节点是第 0 层。
+// 二叉树： 每个节点的子节点不允许超过两个。 相对较小的值保存在左节点中, 较大的值保存在右节点中。
+function Node(data, left, right) {
+    this.data = data;
+    this.left = left;
+    this.right = right;
+    this.show = show;
+}
+
+function show() {
+    return this.data;
+}
+
+function BST() {
+    this.root = null;
+    this.insert = insert;
+    this.inOrder = inOrder;
+    this.preOrder = preOrder;
+    this.postOrder = postOrder;
+    this.getMin = getMin;
+    this.getMax = getMax;
+    this.remove = remove;
+    this.find = find;
+}
+
+function insert(data) {
+    var n = new Node(data, null, null);
+    if (this.root === null) {
+        this.root = n;
+    } else {
+        var current = this.root;
+        var parent;
+        while (true) {
+            parent = current;
+            if (data < current.data) {
+                current = current.left;
+                if (current === null) {
+                    parent.left = n;
+                    break;
+                }
+            } else {
+                current = current.right;
+                if (current === null) {
+                    parent.right = n;
+                    break;
+                }
+            }
+        }
+    }
+}
+//9.1-有三种遍历 BST 的方式:中序、先序和后序
+function inOrder(node) {
+    //中序遍历：LDR,巧记：左根右
+
+    if (node !== null) {
+        inOrder(node.left);
+        console.log("node=", node.show() + " ");
+        inOrder(node.right);
+    }
+}
+
+
+function preOrder(node) {
+    //先序遍历：DLR,巧记：根左右
+
+    if (node !== null) {
+        console.log(node.show() + " ");
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+}
+
+
+function postOrder(node) {
+    //后序遍历：LRD,巧记：左右根
+
+    if (node !== null) {
+        postOrder(node.left);
+
+        postOrder(node.right);
+        console.log(node.show() + " ");
+    }
+}
+
+//查找最小值和最大值
+function getMin() {
+    //最左边的最后一个节点最小
+    var current = this.root;
+    while (current.left !== null) {
+        current = current.left;
+    }
+    return current.data;
+}
+
+function getMax() {
+    //最右边的最后一个节点最大
+    var current = this.root;
+    while (current.right !== null) {
+        current = current.right;
+    }
+    return current.data;
+}
+
+function find(data) {
+    //查找
+    var current = this.root;
+    while (current !== null) {
+        if (current.data == data) {
+
+            return current;
+        } else if (data < current.data) {
+            current = current.left;
+        } else {
+            current = current.right;
+        }
+    }
+    return null;
+}
+//删除
+
+
+function getSmallest(node) {
+    //得到该节点的最小子节点
+    var current = node;
+    while (current.left !== null) {
+        current = current.left;
+    }
+    return current;
+}
+
+function remove(data) {
+    //返回新的二叉树
+    var root = removeNode(this.root, data);
+    return root;
+}
+
+function removeNode(node, data) {
+    if (node === null) {
+        return null;
+    }
+    if (data == node.data) {
+        // 没有子节点的节点
+        if (node.left === null && node.right === null) {
+            return null;
+        }
+        // 没有左子节点的节点
+        if (node.left === null) {
+            return node.right;
+        }
+        // 没有右子节点的节点
+        if (node.right === null) {
+            return node.left;
+        }
+        // 有两个子节点的节点---
+        //如果待删除节点包含两个子节点,正确的做法有两种:要么查找待删除节点左子树上的最大值,要么查找其右子树上的最小值.
+        //采用最小值创建一个临时节点。将 临时节点上的值复制到待删除节点,然后再删除临时节点
+        var tempNode = getSmallest(node.right);
+
+        node.data = tempNode.data;
+        node.right = removeNode(node.right, tempNode.data);
+        return node;
+    } else if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+    } else {
+        node.right = removeNode(node.right, data);
+        return node;
+    }
+}
+
+
+//综合测试用例：
+var nums = new BST();
+nums.insert(23);
+nums.insert(45);
+nums.insert(16);
+
+nums.insert(37);
+nums.insert(3);
+nums.insert(99);
+nums.insert(21);
+
+console.log("bst: ", nums.root); //(23,16(3,21)，45(37,99));
+console.log("中序遍历：LDR,巧记：左根右");
+inOrder(nums.root); //中序遍历输出：3,16,21,23,37,45,99
+console.log("先序遍历：DLR,巧记：根左右");
+preOrder(nums.root); //先序遍历输出：23，16，3，21，45，37，99
+console.log("后序遍历：LRD,巧记：左右根 ");
+postOrder(nums.root); //后序遍历输出：3 21 16 37 99 45 23
+var min = nums.getMin();
+console.log("The minimum value of the BST is: " + min);
+
+var max = nums.getMax();
+console.log("The maximum value of the BST is: " + max);
+var found = nums.find(3);
+if (found !== null) {
+    console.log("Found " + found.data + " in the BST.");
+} else {
+    console.log(found.data + " was not found in the BST.");
+}
+nums.insert(19);
+nums.insert(22);
+postOrder(nums.root); //后序遍历输出：3 19 22 21 16  37 99 45 23
+var newroot = nums.remove(16);//有左右子树的节点
+console.log("newroot=", newroot);
+postOrder(nums.root); //后序遍历输出：3 22 21 19 37 99 45 23
