@@ -908,6 +908,7 @@ console.log("补集=", diff.show());
 // 二叉树： 每个节点的子节点不允许超过两个。 相对较小的值保存在左节点中, 较大的值保存在右节点中。
 function Node(data, left, right) {
     this.data = data;
+    this.count = 1;
     this.left = left;
     this.right = right;
     this.show = show;
@@ -927,6 +928,7 @@ function BST() {
     this.getMax = getMax;
     this.remove = remove;
     this.find = find;
+    this.update = update;
 }
 
 function insert(data) {
@@ -1107,6 +1109,304 @@ if (found !== null) {
 nums.insert(19);
 nums.insert(22);
 postOrder(nums.root); //后序遍历输出：3 19 22 21 16  37 99 45 23
-var newroot = nums.remove(16);//有左右子树的节点
+var newroot = nums.remove(16); //有左右子树的节点
 console.log("newroot=", newroot);
 postOrder(nums.root); //后序遍历输出：3 22 21 19 37 99 45 23
+//添加计数功能
+function update(data) {
+    var grade = this.find(data);
+    grade.count++;
+    return grade;
+}
+
+function prArray(arr) {
+    console.log(arr[0].toString() + ' ');
+    for (var i = 1; i < arr.length; ++i) {
+        console.log(arr[i].toString() + ' ');
+        if (i % 10 === 0) {
+            console.log("\n");
+        }
+    }
+}
+
+function genArray(length) {
+    var arr = [];
+    for (var i = 0; i < length; ++i) {
+        arr[i] = Math.floor(Math.random() * 101);
+    }
+    return arr;
+}
+//示例：记录不同成绩出现的次数
+var grades = genArray(100);
+prArray(grades);
+var gradedistro = new BST();
+for (var i = 0; i < grades.length; ++i) {
+    var g = grades[i];
+    var grade = gradedistro.find(g);
+    if (grade === null) {
+        gradedistro.insert(g);
+    } else {
+        gradedistro.update(g);
+    }
+}
+var g = 20;
+var aGrade = gradedistro.find(g);
+if (aGrade === null) {
+    console.log("No occurrences of " + g);
+} else {
+    console.log("Occurrences of " + g + ": " + aGrade.count);
+}
+//-------------------------
+//10,图和图算法
+// 图：由边的集合及顶点的集合组成
+// 有向图：一个 图的顶点对是有序的。
+// 边：
+// 顶点;
+// 成本：
+// 环：
+// 圈：
+// 简单圈：
+// 平凡圈：
+// 强连通：
+// 邻接表或者邻接表数组： 表示图的边的方法。 将边存储为由顶点的相邻顶点列表构成的数组
+// 邻接矩阵： 一个二维数组, 其中的元素表示两个顶点之间是否有一条边。
+// 实际应用;
+// 地图， 交通图， 局域网， 供应商与消费者等。
+function Vertex(label) {
+    //顶点函数，这个有点简单。
+    this.label = label; //标识顶点
+    //this.wasVisited=wasVisited;//表明这 个顶点是否被访问过的布尔值
+}
+
+function Graph(v) {
+    this.vertices = v; //顶点值范围
+    this.edges = 0; //边数
+    this.adj = [];
+    for (var i = 0; i < this.vertices; ++i) {
+        this.adj[i] = [];
+        this.adj[i].push("");
+    }
+    this.addEdge = addEdge;
+    this.toString = toString;
+    this.showGraph = showGraph;
+}
+
+function addEdge(v, w) {
+    this.adj[v].push(w);
+    this.adj[w].push(v);
+    this.edges++;
+}
+
+function showGraph() {
+    for (var i = 0; i < this.vertices; i++) {
+        console.log(i + "->");
+        for (var j = 0; j < this.vertices; j++) {
+            if (this.adj[i][j] !== undefined) {
+                console.log(this.adj[i][j] + ' ');
+            }
+        }
+
+    }
+}
+//测试用例：
+var g = new Graph(5);
+g.addEdge(0, 1);
+g.addEdge(0, 2);
+g.addEdge(1, 3);
+g.addEdge(2, 4);
+g.showGraph();
+//输出结果：
+// 0 -> 1 2
+//      1 -> 0 3
+//      2 -> 0 4
+//      3 -> 1
+// 4 -> 2
+
+//深度优先搜索:从一条路径的起始顶点开始追溯,访问一个没有访问过的顶点,将它标记为已访问,再递归地
+//去访问在初始顶点的邻接表中其他没有访问过的顶点,直到到达最后一个顶点
+function Graph(v) {
+    this.vertices = v;
+    this.vertexList = [];
+    this.edges = 0;
+    this.adj = [];
+    this.edgeTo = []; //保存从一个顶点到下一个顶点的所有边
+    this.pathTo = pathTo;
+    this.hasPathTo = hashPathTo;
+    for (var i = 0; i < this.vertices; i++) {
+        this.adj[i] = [];
+        this.adj[i].push(""); //这行导致每个数组第一个元素都是空，预留
+    }
+    this.addEdge = addEdge;
+    this.showGraph = showGraph;
+    this.dfs = dfs; //深度优先搜索算法
+    this.bfs = bfs; //广度优先搜索算法
+    this.marked = []; //访问节点标记，默认都是false
+    this.topSortHelper = topSortHelper;
+    this.topSort = topSort;
+    for (var j = 0; j < this.vertices; j++) {
+        this.marked[j] = false;
+    }
+}
+
+function addEdge(v, w) {
+    this.adj[v].push(w);
+    this.adj[w].push(v);
+    this.edges++;
+}
+
+function showGraph() {
+    for (var i = 0; i < this.vertices; i++) {
+        console.log(i + " -> ");
+        for (var j = 0; j < this.vertices; j++) {
+            if (this.adj[i][j] !== undefined) {
+                console.log(this.adj[i][j] + '  ');
+            }
+        }
+        //print();
+    }
+}
+
+function dfs(v) {
+    this.marked[v] = true;
+    if (this.adj[v] !== undefined) {
+        console.log("dfs Visited vertex: v= " + v);
+    }
+    for (var w in this.adj[v]) {
+        var item = this.adj[v][w]; //书上这个地方有问题，导致3，4遍历不到
+        if (!this.marked[item]) {
+            this.dfs(item);
+        }
+    }
+}
+
+
+//广度优先搜索：从第一个顶点开始,尝试访问尽可能靠近它的顶点，步骤如下：
+// (1) 查找与当前顶点相邻的未访问顶点,将其添加到已访问顶点列表及队列中;
+// (2) 从图中取出下一个顶点 v,添加到已访问的顶点列表;
+// (3) 将所有与 v 相邻的未访问顶点添加到队列
+
+function bfs(s) {
+    var queue = [];
+    this.marked[s] = true;
+    queue.push(s); // 添加到队尾
+    while (queue.length > 0) {
+        var v = queue.shift(); // 从队首移除
+        if (v !== undefined) {
+            console.log("bfs Visisted vertex:  " + v);
+        }
+        for (var w in this.adj[v]) {
+            var item = this.adj[v][w];
+            if (!this.marked[item]) {
+                this.edgeTo[item] = v;
+                this.marked[item] = true;
+                queue.push(item);
+            }
+        }
+    }
+}
+//最短路径--bfs实现
+function pathTo(v) {
+    //从根节点到v节点的路径
+    var source = 0; //根节点或源节点
+    if (!this.hasPathTo(v)) {
+        return undefined;
+    }
+    var path = [];
+    for (var i = v; i != source; i = this.edgeTo[i]) {
+        path.push(i);
+    }
+    path.push(source);
+    console.log("path=", path.reverse().join('-'));
+    return path;
+}
+
+function hashPathTo(v) {
+    return this.marked[v];
+}
+
+
+
+
+//测试用例：
+var g = new Graph(5);
+g.addEdge(0, 1);
+g.addEdge(0, 2);
+g.addEdge(1, 3);
+g.addEdge(2, 4);
+g.showGraph();
+g.dfs(0); //深度优先搜索
+//初始化marked数组
+for (var j = 0; j < g.vertices; j++) {
+    g.marked[j] = false;
+}
+g.bfs(0); //广度优先搜索
+
+console.log("Visited vertex: mark= " + g.marked, g.adj);
+//最短路径
+var vertex = 4;
+var paths = g.pathTo(vertex);
+
+//总结：书上是有些问题的。marked的初始化，vertices=5，元素值0-4的关联性需要注意一下。
+//拓扑排序：对有向图的所有顶点进行排序,使有向边从前面的顶点指向后面的顶点
+//拓扑排序算法与深度优先搜索类似。不同的是,拓扑排序算法不会立即输出已访问的顶点,而是访问当前顶点邻接表中的所有相邻顶点,直到这个列表穷尽时,才将当前顶点压 入栈中
+function topSort() {
+    var stack = [];
+    var visited = [];
+    for (var i = 0; i < this.vertices; i++) {
+        visited[i] = false;
+    }
+    for (var j = 0; j < this.vertices; j++) {
+        if (visited[j] === false) {
+            this.topSortHelper(j, visited, stack);
+        }
+    }
+    for (var k = 0; k < stack.length; k++) {
+        if (stack[k] !== undefined && stack[k] !== false) {
+            console.log(this.vertexList[stack[k]]);
+        }
+    }
+}
+
+function topSortHelper(v, visited, stack) {
+    //按照深度优先搜索实现的
+    visited[v] = true;
+    for (var w in this.adj[v]) {
+        var item = this.adj[v][w];
+        if (!visited[item]) {
+            this.topSortHelper(visited[item], visited, stack);
+        }
+    }
+    stack.push(v);
+}
+
+function showGraph() {
+    var visited = [];
+    for (var i = 0; i < this.vertices; ++i) {
+        //console.log(this.vertexList[i] + " -> ");
+        visited.push(this.vertexList[i]);
+        for (var j = 0; j < this.vertices; ++j) {
+            if (this.adj[i][j] !== undefined) {
+                if (visited.indexOf(this.vertexList[j]) < 0) {
+                    //  console.log(this.vertexList[j] + ' ');
+                }
+            }
+        }
+        visited.pop();
+    }
+}
+//拓扑排序-测试用例
+var g = new Graph(6);
+g.addEdge(1, 2);
+g.addEdge(2, 5);
+g.addEdge(1, 3);
+g.addEdge(1, 4);
+g.addEdge(0, 1);
+g.vertexList = ["CS1", "CS2", "Data Structures",
+    "Assembly Language", "Operating Systems",
+    "Algorithms"
+];//有向图
+g.showGraph();
+g.topSort();
+//总结：书上有不少错误的地方，请主动控制台执行一下。上边的代码有已经在chrome的控制台测试过了。
+//-------------------------------
+//11,排序算法
