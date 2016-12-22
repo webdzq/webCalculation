@@ -7,6 +7,7 @@
 7，如果觉得我辛苦并内容对你学习有价值，就给我个star吧！<br/>
 8，如果你觉得这些都简单，可以加case和规则，提高难度，锻炼思维。<br/>
 9，数组的方法参考MDN(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)<br/>
+10，books文件夹里收录了一下算法书籍里的算法和调试结果。
 w3cshool是程序员自我提升非常好的平台。适合各个阶段的人。<br/>
 算法模型来源w3cshool：http://www.w3cschool.cn/codecamp/list；<br/>
 ps：如果你是新手，可以学习一下。如果你是大神。请批评和指正，希望可以提供更优算法方法，或者提供更多学习js编程的好算法。互相学习，不胜感激！<br/>
