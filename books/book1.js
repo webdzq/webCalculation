@@ -1404,9 +1404,328 @@ g.addEdge(0, 1);
 g.vertexList = ["CS1", "CS2", "Data Structures",
     "Assembly Language", "Operating Systems",
     "Algorithms"
-];//有向图
+]; //有向图
 g.showGraph();
 g.topSort();
 //总结：书上有不少错误的地方，请主动控制台执行一下。上边的代码有已经在chrome的控制台测试过了。
 //-------------------------------
 //11,排序算法
+//数组测试平台:辅助我们完成基本排序算法的研究
+function CArray(numElements) {
+    this.dataStore = [];
+    this.pos = 0;
+    this.numElements = numElements;
+    this.insert = insert;
+    this.toString = toString;
+    this.clear = clear;
+    this.setData = setData;
+    this.swap = swap;
+    this.bubbleSort = bubbleSort;
+    this.selectionSort = selectionSort;
+    this.insertionSort = insertionSort;
+
+    this.gaps = [5, 3, 1];
+    this.setGaps = setGaps;
+    this.shellsort = shellsort;
+    this.shellsort1 = shellsort1;
+
+    this.mergeSort = mergeSort;
+    this.mergeArrays = mergeArrays;
+    for (var i = 0; i < numElements; ++i) {
+        this.dataStore[i] = i;
+    }
+}
+
+function setData() {
+    for (var i = 0; i < this.numElements; ++i) {
+        this.dataStore[i] = Math.floor(Math.random() * (this.numElements + 1));
+    }
+}
+
+function clear() {
+    for (var i = 0; i < this.dataStore.length; ++i) {
+        this.dataStore[i] = 0;
+    }
+}
+
+function insert(element) {
+    this.dataStore[this.pos++] = element;
+}
+
+function toString() {
+    var retstr = "";
+    for (var i = 0; i < this.dataStore.length; ++i) {
+        retstr += this.dataStore[i] + " ";
+        if (i > 0 && i % 10 === 0) {
+            retstr += "\n";
+        }
+    }
+    return retstr;
+}
+
+function swap(arr, index1, index2) {
+    var temp = arr[index1];
+    arr[index1] = arr[index2];
+    arr[index2] = temp;
+}
+//测试用例：
+var numElements = 10;
+var myNums = new CArray(numElements);
+myNums.setData();
+console.log(myNums.toString());
+//[1]冒泡排序算法,最慢的排序算法之一.其实后边先整齐的
+function bubbleSort() { //升序
+    var numElements = this.dataStore.length;
+    var temp;
+    var start = new Date().getTime();
+    console.log("bubbleSort排序开始：", start);
+    for (var outer = numElements; outer >= 2; --outer) {
+        for (var inner = 0; inner <= outer - 1; ++inner) {
+            if (this.dataStore[inner] > this.dataStore[inner + 1]) {
+                swap(this.dataStore, inner, inner + 1);
+            }
+        }
+
+        console.log(this.toString());
+
+    }
+    var end = new Date().getTime();
+    console.log("bubbleSort排序结束", end);
+    console.log("bubbleSort消耗时间：", end - start);
+}
+
+//选择排序算法，前边先整齐的。
+function selectionSort() {
+    var min, temp;
+    var start = new Date().getTime();
+    console.log("selectionSort排序开始：", start);
+    for (var outer = 0; outer <= this.dataStore.length - 2; ++outer) {
+        min = outer; //关键的一句
+        for (var inner = outer + 1; inner <= this.dataStore.length - 1; ++inner) {
+            if (this.dataStore[inner] < this.dataStore[min]) {
+                min = inner;
+            }
+            swap(this.dataStore, outer, min);
+        }
+        console.log(this.toString());
+    }
+    var end = new Date().getTime();
+    console.log("selectionSort排序结束", end);
+
+    console.log("selectionSort消耗时间：", end - start);
+}
+//插入排序
+function insertionSort() {
+    var temp, inner;
+    var start = new Date().getTime();
+    console.log("insertionSort排序开始：", start);
+    for (var outer = 1; outer <= this.dataStore.length - 1; ++outer) {
+        temp = this.dataStore[outer]; //存放最初的比较元素
+        inner = outer;
+        while (inner > 0 && (this.dataStore[inner - 1] >= temp)) {
+            this.dataStore[inner] = this.dataStore[inner - 1];
+            --inner;
+        }
+        //while结束后，inner的位置是空的。
+        this.dataStore[inner] = temp;
+        console.log(this.toString());
+    }
+    var end = new Date().getTime();
+    console.log("insertionSort排序结束", end);
+    console.log("insertionSort消耗时间：", end - start);
+}
+
+
+
+
+//高级排序算法
+//希尔排序:通过定义一个间隔序列来表示在排序过程中进行比较的元素之 间有多远的间隔
+function shellsort() {
+    //这个非常的慢
+    var start = new Date().getTime();
+    console.log("shellsort排序开始：", start);
+    for (var g = 0; g < this.gaps.length; ++g) {
+        console.log("排序间隔=", this.gaps[g]);
+        for (var i = this.gaps[g]; i < this.dataStore.length; ++i) {
+            var temp = this.dataStore[i];
+            for (var j = i; j >= this.gaps[g] &&
+                this.dataStore[j - this.gaps[g]] > temp; j -= this.gaps[g]) {
+                this.dataStore[j] = this.dataStore[j - this.gaps[g]];
+            }
+            this.dataStore[j] = temp;
+            console.log(this.toString());
+        }
+
+    }
+    var end = new Date().getTime();
+    console.log("shellsort排序结束", end);
+    console.log("shellsort消耗时间：", end - start);
+}
+
+function setGaps(arr) {
+    this.gaps = arr;
+}
+
+function shellsort1() {
+    //优化后的希尔排序，动态间隔序列
+    var N = this.dataStore.length;
+    var h = 1;
+    var start = new Date().getTime();
+    console.log("shellsort1排序开始：", start);
+    while (h < N / 3) {
+        h = 3 * h + 1;
+    }
+    while (h >= 1) {
+        for (var i = h; i < N; i++) {
+            for (var j = i; j >= h && this.dataStore[j] < this.dataStore[j - h]; j -= h) {
+                swap(this.dataStore, j, j - h);
+            }
+            console.log(this.toString());
+        }
+        h = (h - 1) / 3;
+    }
+    var end = new Date().getTime();
+    console.log("shellsort1排序结束", end);
+    console.log("shellsort1消耗时间：", end - start);
+}
+// 归并排序：采用非递归或者迭代版本的归并排序是一个自底向上的过程
+function mergeSort(varr) {
+    var arr = varr || this.dataStore;
+    if (arr.length < 2) {
+        return;
+    }
+    var step = 1;
+    var left, right;
+    var start = new Date().getTime();
+    console.log("mergeSort排序开始：", start);
+    while (step < arr.length) {
+        left = 0;
+        right = step;
+        while (right + step <= arr.length) {
+            mergeArrays(arr, left, left + step, right, right + step);
+            left = right + step;
+            right = left + step;
+        }
+        if (right < arr.length) {
+            mergeArrays(arr, left, left + step, right, arr.length);
+        }
+        step *= 2;
+    }
+    var end = new Date().getTime();
+    console.log("mergeSort排序结束", end);
+    console.log("mergeSort消耗时间：", end - start);
+}
+
+function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
+    var rightArr = new Array(stopRight - startRight + 1);
+    var leftArr = new Array(stopLeft - startLeft + 1);
+    k = startRight;
+    for (var i = 0; i < (rightArr.length - 1); ++i) {
+        rightArr[i] = arr[k];
+        ++k;
+    }
+    k = startLeft;
+    for (var j = 0; j < (leftArr.length - 1); ++j) {
+        leftArr[j] = arr[k];
+        ++k;
+    }
+
+    rightArr[rightArr.length - 1] = Infinity; // 哨兵值
+    leftArr[leftArr.length - 1] = Infinity; // 哨兵值
+    var m = 0;
+    var n = 0;
+    for (var k = startLeft; k < stopRight; ++k) {
+        if (leftArr[m] <= rightArr[n]) {
+            arr[k] = leftArr[m];
+            m++;
+        } else {
+            arr[k] = rightArr[n];
+            n++;
+        }
+    }
+    console.log("left array - ", leftArr);
+    console.log("right array - ", rightArr);
+}
+
+// 快速排序
+// (1) 选择一个基准元素,将列表分隔成两个子序列;
+// (2) 对列表重新排序,将所有小于基准值的元素放在基准值的前面,所有大于基准值的元
+// 素放在基准值的后面;
+// (3) 分别对较小元素的子序列和较大元素的子序列重复步骤 1 和 2。
+function qSort(list) {
+
+    if (list.length === 0) {
+        return [];
+    }
+    var lesser = [];
+    var greater = [];
+    var pivot = list[0]; //基准元素
+    console.log("list.length=",list.length);
+
+    for (var i = 1; i < list.length; i++) {
+        console.log(" 基准值:" + pivot + " 当前元素:" + list[i]);
+        if (list[i] < pivot) {
+            console.log(" 移动 " + list[i] + " 到左边 ");
+            lesser.push(list[i]);
+        } else {
+            console.log(" 移动 " + list[i] + " 到右边 ");
+            greater.push(list[i]);
+        }
+    }
+
+    return qSort(lesser).concat(pivot, qSort(greater));
+}
+
+//测试快速排序
+var a = [];
+for (var i = 0; i < 100; ++i) {
+    a[i] = Math.floor((Math.random() * 100) + 1);
+}
+console.log(a);
+var start = new Date().getTime();
+console.log("qSort排序开始：", start);
+console.log(qSort(a));
+var end = new Date().getTime();
+console.log("qSort排序结束", end);
+console.log("qSort消耗时间：", end - start);
+// 堆排序-略
+//测试用例：
+var numElements = 10;
+var mynums = new CArray(numElements);
+mynums.setData();
+console.log(mynums.toString());
+mynums.bubbleSort();
+
+mynums.clear();
+mynums.setData();
+console.log(mynums.toString());
+mynums.selectionSort();
+
+mynums.clear();
+mynums.setData();
+console.log(mynums.toString());
+mynums.insertionSort();
+
+mynums.clear();
+mynums.setData();
+console.log(mynums.toString());
+mynums.shellsort();
+
+mynums.clear();
+mynums.setData();
+console.log(mynums.toString());
+mynums.shellsort1();
+
+mynums.clear();
+mynums.setData();
+console.log(mynums.toString());
+mynums.mergeSort();
+console.log(mynums.toString());
+//观察冒泡和选择排序，前者是后边先整齐的，后者是前边先整齐的
+//总结；测试100个元素，1000个，10000个元素的排序时间(10000个浏览器受不了)。结论就不下来，有点吃惊！程序就在这里。都试试。100个和1000个数据。希尔竟然是最慢。
+//缺少了几个算法，有空补上。可以参考：http://www.cnblogs.com/dushao/p/6004883.html
+
+//--------------------------
+//检索算法
+// 在列表中查找数据有两种方式:顺序查找和二分查找。顺序查找适用于元素随机排列的列表;二分查找适用于元素已排序的列表。
+// 二分查找效率更高,但是你必须在进行查找之前 花费额外的时间将列表中的元素排序
