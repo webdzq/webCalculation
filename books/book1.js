@@ -1986,3 +1986,154 @@ start = new Date().getTime();
 console.log(iterFib(10));
 stop = new Date().getTime();
 console.log(" 动态规划未用数组版耗时 - " + (stop - start) + " 毫秒 ");
+
+//寻找最长公共子串
+function lcs(word1, word2) {
+    var max = 0;
+    var index = 0;
+    //初始化
+    var lcsarr = new Array(word1.length + 1);
+    for (var i = 0; i <= word1.length + 1; ++i) {
+        lcsarr[i] = new Array(word2.length + 1);
+        for (var j = 0; j <= word2.length + 1; ++j) {
+
+            lcsarr[i][j] = 0;
+        }
+    }
+    //函数部分
+    for (var k = 0; k <= word1.length; ++k) {
+        var print = "";
+        for (var g = 0; g <= word2.length; ++g) {
+
+            if (k === 0 || g === 0) {
+                lcsarr[k][g] = 0;
+            } else {
+                if (word1[k - 1] == word2[g - 1]) {
+                    lcsarr[k][g] = lcsarr[k - 1][g - 1] + 1;
+                } else {
+                    lcsarr[k][g] = 0;
+                }
+            }
+            if (max < lcsarr[k][g]) {
+                max = lcsarr[k][g];
+                index = k;
+            }
+            print += lcsarr[k][g] + " ";
+        }
+        console.log(k, print);
+    }
+    var str = "";
+    if (max === 0) {
+        return "";
+    } else {
+        for (var h = index - max; h <= max; ++h) {
+            str += word2[h];
+        }
+        return str;
+    }
+}
+//测试用例：
+lcs('abbcc', 'dbbccd');
+
+//背包问题:递归解决方案
+// 描述：如果在我们例子中的保险箱中有 5 件物品,它们的尺寸分别是 3、4、7、8、9,
+//而它们的价值分别是 4、5、10、11、13, 且背包的容积为 16,
+//那么恰当的解决方案是选取第三件物品和第五件物品,他们的总尺寸是 16,总价值是 23
+function max(a, b) {
+    return (a > b) ? a : b;
+}
+
+function knapsack(capacity, size, value, n) {
+    if (n === 0 || capacity === 0) {
+        return 0;
+    }
+    if (size[n - 1] > capacity) {
+        return knapsack(capacity, size, value, n - 1);
+    } else {
+        return max(value[n - 1] +
+            knapsack(capacity - size[n - 1], size, value, n - 1),
+            knapsack(capacity, size, value, n - 1));
+    }
+}
+var value = [4, 5, 10, 11, 13]; //价值，有序
+var size = [3, 4, 7, 8, 9]; //尺寸,有序
+var capacity = 16; //容积
+var n = 5; //物品件数
+console.log(knapsack(capacity, size, value, n));
+//背包问题:动态规划方案
+function max(a, b) {
+    return (a > b) ? a : b;
+}
+
+function dKnapsack(capacity, size, value, n) {
+    var K = [];
+    for (var g = 0; g <= capacity + 1; g++) {
+        K[g] = [];
+    }
+    for (var i = 0; i <= n; i++) {
+        var print = "";
+        for (var w = 0; w <= capacity; w++) {
+            if (i === 0 || w === 0) {
+                K[i][w] = 0;
+            } else if (size[i - 1] <= w) {
+                K[i][w] = max(value[i - 1] + K[i - 1][w - size[i - 1]],
+                    K[i - 1][w]);
+                //  print += K[i][w] + " ";
+            } else {
+                K[i][w] = K[i - 1][w];
+                //print += K[i][w] + " ";
+            }
+
+            print += K[i][w] + " ";
+        }
+        console.log(i, print);
+    }
+    return K[n][capacity];
+}
+var value = [4, 5, 10, 11, 13];
+var size = [3, 4, 7, 8, 9];
+var capacity = 16;
+var n = 5;
+console.log(dKnapsack(capacity, size, value, n));
+// 贪心算法
+// 找零问题:你从商店购买了一些商品,找零 63 美分,店员要 怎样给你这些零钱呢?如果店员根据贪心算法来找零的话,
+// 他会给你两个 25 美分、一个 10 美分和三个 1 美分。在没有使用 50 美分的情况下这是最少的硬币数量
+function makeChange(origAmt, coins) {
+    var remainAmt = 0;
+    if (origAmt % 25 < origAmt) {
+        coins[3] = parseInt(origAmt / 25);
+        remainAmt = origAmt % 25;
+        origAmt = remainAmt;
+    }
+    if (origAmt % 10 < origAmt) {
+        coins[2] = parseInt(origAmt / 10);
+        remainAmt = origAmt % 10;
+        origAmt = remainAmt;
+    }
+    if (origAmt % 5 < origAmt) {
+        coins[1] = parseInt(origAmt / 5);
+        remainAmt = origAmt % 5;
+        origAmt = remainAmt;
+    }
+    coins[0] = parseInt(origAmt / 1);
+
+}
+
+function showChange(coins) {
+    if (coins[3] > 0) {
+        console.log("25 美分的数量 - " + coins[3] + " - " + coins[3] * 25);
+    }
+    if (coins[2] > 0) {
+        console.log("10 美分的数量 - " + coins[2] + " - " + coins[2] * 10);
+    }
+    if (coins[1] > 0) {
+        console.log("5 美分的数量 - " + coins[1] + " - " + coins[1] * 5);
+    }
+    if (coins[0] > 0) {
+        console.log("1 美分的数量 - " + coins[0] + " - " + coins[0] * 1);
+    }
+}
+var origAmt = 63;
+var coins = [];
+makeChange(origAmt, coins);
+showChange(coins);
