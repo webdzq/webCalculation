@@ -1660,7 +1660,7 @@ function qSort(list) {
     var lesser = [];
     var greater = [];
     var pivot = list[0]; //基准元素
-    console.log("list.length=",list.length);
+    console.log("list.length=", list.length);
 
     for (var i = 1; i < list.length; i++) {
         console.log(" 基准值:" + pivot + " 当前元素:" + list[i]);
@@ -1729,3 +1729,260 @@ console.log(mynums.toString());
 //检索算法
 // 在列表中查找数据有两种方式:顺序查找和二分查找。顺序查找适用于元素随机排列的列表;二分查找适用于元素已排序的列表。
 // 二分查找效率更高,但是你必须在进行查找之前 花费额外的时间将列表中的元素排序
+//顺序查找： 就是逐个查找
+
+function seqSearch(arr, data) {
+    //查找data，找到返回位置，找不到返回-1，类似indexof，但比indexof慢
+    for (var i = 0; i < arr.length; ++i) {
+        if (arr[i] == data) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function findMin(arr) {
+    //查找最小值
+    var min = arr[0];
+    for (var i = 1; i < arr.length; ++i) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    return min;
+}
+
+function findMax(arr) {
+    //查找最大值
+    var max = arr[0];
+    for (var i = 1; i < arr.length; ++i) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+//使用自组织数据：80-20原则（帕累托(Pareto)分布）。将常用的置于起始位置。
+function seqSearch(arr, data) {
+    for (var i = 0; i < arr.length; ++i) {
+        if (arr[i] == data) {
+            if (i > 0) {
+                swap(arr, i, i - 1); //使用自组织数据，没查到一次前移一位。
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+function swap(arr, index, index1) {
+    var temp = arr[index];
+    arr[index] = arr[index1];
+    arr[index1] = temp;
+}
+//测试用例：
+var numbers = [5, 1, 7, 4, 2, 10, 9, 3, 6, 8];
+console.log(numbers);
+for (var i = 1; i <= 3; i++) {
+    seqSearch(numbers, 4);
+    console.log(numbers);
+}
+//注：查找3次，4的位置在不断前移。
+//改进：根据80-20原则。元素位置在20%之外，才将它移到起始位置。
+function seqSearch(arr, data) {
+    for (var i = 0; i < arr.length; ++i) {
+        if (arr[i] == data && i > (arr.length * 0.2)) {
+            swap(arr, i, 0);
+            return true;
+        } else if (arr[i] == data) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function swap(arr, index, index1) {
+    var temp = arr[index];
+    arr[index] = arr[index1];
+    arr[index1] = temp;
+}
+//测试用例：
+var nums = [];
+for (var i = 0; i < 10; ++i) {
+    nums[i] = Math.floor(Math.random() * 11);
+}
+nums.sort();
+console.log(nums);
+console.log(" 输入一个要查找的值:");
+//var val = parseInt(readline());
+var val = 2; //val=2和3，查询结果不同。
+if (seqSearch(nums, val)) {
+    console.log(" 找到了元素:");
+
+    console.log(nums);
+} else {
+    console.log(val + " 没有出现在这个数组中。");
+}
+//二分查找算法:(下边界等于或小于上边界)
+// a. 将中点设置为(上边界加上下边界)除以 2。
+// b. 如果中点的元素小于查询的值,则将下边界设置为中点元素所在下标加 1。
+// c. 如果中点的元素大于查询的值,则将上边界设置为中点元素所在下标减 1。
+// d. 否则中点元素即为要查找的数据,可以进行返回。
+//注：[1]若有重复值，只能取到中间的那个。[2]查找的是有序数组
+function binSearch(arr, data) {
+    var upperBound = arr.length - 1;
+    var lowerBound = 0;
+    while (lowerBound <= upperBound) {
+        var mid = Math.floor((upperBound + lowerBound) / 2);
+        if (arr[mid] < data) {
+            lowerBound = mid + 1;
+        } else if (arr[mid] > data) {
+            upperBound = mid - 1;
+        } else {
+            return mid;
+        }
+    }
+    return -1;
+}
+
+function dispArr(arr) {
+    console.log(arr.toString());
+}
+//测试用例：
+var nums = [];
+for (var i = 0; i < 10; ++i) {
+    nums[i] = Math.floor(Math.random() * 101);
+}
+nums.sort();
+dispArr(nums);
+
+console.log(" 输入一个要查找的值:");
+//var val = parseInt(readline());//模拟命令行输入的
+var val = 8;
+var retVal = binSearch(nums, val);
+if (retVal >= 0) {
+    console.log(" 已找到 " + val + " ,所在位置为:" + retVal);
+} else {
+    console.log(val + " 没有出现在这个数组中。");
+}
+//计算重复次数
+function count(arr, data) {
+    //简单计数
+    var count = 0;
+    var position = binSearch(arr, data);
+    if (position > -1) {
+        ++count;
+        for (var i = position - 1; i > 0; --i) {
+            if (arr[i] == data) {
+                ++count;
+            }
+        }
+        for (var k = position + 1; k < arr.length; ++k) {
+            if (arr[k] == data) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+//测试用例：
+function binSearch(arr, data) {
+    var upperBound = arr.length - 1;
+    var lowerBound = 0;
+    while (lowerBound <= upperBound) {
+        var mid = Math.floor((upperBound + lowerBound) / 2);
+        if (arr[mid] < data) {
+            lowerBound = mid + 1;
+        } else if (arr[mid] > data) {
+            upperBound = mid - 1;
+        } else {
+            return mid;
+        }
+    }
+    return -1;
+}
+
+function insertionsort(arr) {
+    var temp, inner;
+    for (var outer = 1; outer <= arr.length - 1; ++outer) {
+        temp = arr[outer];
+
+        inner = outer;
+        while (inner > 0 && (arr[inner - 1] >= temp)) {
+            arr[inner] = arr[inner - 1];
+            --inner;
+        }
+        arr[inner] = temp;
+    }
+}
+//var words = read("words.txt").split(" ");
+var word = "The nationalism of Hamilton was undemocratic. The rhetoric rhetoric mission of uniting nationa learned in the schools ";
+var words = word.split(" ");
+insertionsort(words);
+var word = "rhetoric";
+var start = new Date().getTime();
+var position = binSearch(words, word);
+var stop = new Date().getTime();
+var elapsed = stop - start;
+if (position >= 0) {
+    console.log(" 单词 " + word + " 被找的位置在:" + position + "。");
+    console.log(" 二分查找消耗了 " + elapsed + " 毫秒。");
+} else {
+    console.log(word + " 这个单词没有出现在这个文件内容中。");
+}
+//---------------------------------
+//高级算法
+//动态规划：斐波那契函数两种实现方法
+function recurFib(n) {
+    //递归实现
+    if (n < 2) {
+        return n;
+    } else {
+        return recurFib(n - 1) + recurFib(n - 2);
+    }
+}
+
+function dynFib(n) {
+    //动态规划实现，使用数组实现中间值保存
+    var val = [];
+    for (var i = 0; i <= n; ++i) {
+        val[i] = 0;
+    }
+    if (n == 1 || n == 2) {
+        return 1;
+    } else {
+        val[1] = 1;
+        val[2] = 2;
+        for (var j = 3; j <= n; ++j) {
+            val[j] = val[j - 1] + val[j - 2];
+        }
+        return val[n - 1];
+    }
+}
+
+function iterFib(n) {
+    //动态规划实现，未使用数组
+    var last = 1;
+    var nextLast = 1;
+    var result = 1;
+    for (var i = 2; i < n; ++i) {
+        result = last + nextLast;
+        nextLast = last;
+        last = result;
+    }
+    return result;
+}
+var start = new Date().getTime();
+console.log(recurFib(10));
+var stop = new Date().getTime();
+console.log(" 递归计算耗时 - " + (stop - start) + " 毫秒 ");
+
+start = new Date().getTime();
+console.log(dynFib(10));
+stop = new Date().getTime();
+console.log(" 动态规划耗时 - " + (stop - start) + " 毫秒 ");
+
+start = new Date().getTime();
+console.log(iterFib(10));
+stop = new Date().getTime();
+console.log(" 动态规划未用数组版耗时 - " + (stop - start) + " 毫秒 ");
