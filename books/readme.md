@@ -8,6 +8,6 @@
 [4]算法还是有难度的，需要多看多思考多悟！
 # 参考文献
 [1]资料地址：https://github.com/oreillymedia/;
-
+[2]十大排序算法（有算法演示图）：http://www.cnblogs.com/dushao/p/6004883.html
 </pre>
 </p>
