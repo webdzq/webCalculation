@@ -7,7 +7,7 @@ function reverseString(str) {
 }
 
 reverseString("hello");
-//2,翻转字符串算法
+//2,求阶乘算法
 //方法1：
 function factorialize(num) {
 
@@ -40,7 +40,7 @@ function findLongestWord(str) {
     var arr = str.split(' ');
     var itemb = '';
 
-    itemb = arr.reduce(function(item, curword) {
+    itemb = arr.reduce(function (item, curword) {
 
         return item.length > curword.length ? item : curword;
     });
@@ -51,7 +51,7 @@ function findLongestWord(str) {
 findLongestWord("The quick brown fox jumped over the lazy dog");
 //5，设置首字母大写算法
 function titleCase(str) {
-    str = str.replace(/\b[\w']+\b/g, function(word) {
+    str = str.replace(/\b[\w']+\b/g, function (word) {
         return word.toLowerCase().substring(0, 1).toUpperCase() + word.toLowerCase().substring(1);
     });
     return str;
@@ -65,7 +65,7 @@ function largestOfFour(arr) {
     var narr = [];
     for (var i = 0; i < arr.length; i++) {
         var item = arr[i];
-        var max = item.reduce(function(cur, next) {
+        var max = item.reduce(function (cur, next) {
             return cur > next ? cur : next;
         });
         narr.push(max);
@@ -162,7 +162,7 @@ mutation(["hello", "hey"]);
 //13,删除数组中特定值算法
 function bouncer(arr) {
     // Don't show a false ID to this bouncer.
-    var narr = arr.filter(function(item) {
+    var narr = arr.filter(function (item) {
 
         return !!item;
     });
@@ -200,18 +200,18 @@ function where(arr, num) {
     var ind = 0;
     console.log(arr);
 
-    arr.forEach(function(item, index, arr) {
+    arr.forEach(function (item, index, arr) {
         if (item == num) {
             arr.splice(index, 1);
         }
     });
     arr.push(num);
-    arr.sort(function(a, b) {
+    arr.sort(function (a, b) {
         return a - b;
     });
 
     console.log("ar...", arr);
-    arr.forEach(function(item, index, arr) {
+    arr.forEach(function (item, index, arr) {
         if (item == num) {
             ind = index;
         }
@@ -223,7 +223,7 @@ where([10, 20, 30, 40, 50], 30);
 //16,位移密码算法
 function rot13(str) { // LBH QVQ VG!
 
-    str = str.replace(/\w+/g, function(word) {
+    str = str.replace(/\w+/g, function (word) {
         console.log(word);
         var len = word.length;
         var nstr = "";
@@ -264,7 +264,7 @@ function diff(arr1, arr2) {
     arr1.sort();
     var arr = [];
     var obj = {};
-    arr1.forEach(function(item, index) {
+    arr1.forEach(function (item, index) {
         if (!obj[item]) {
             obj[item] = 1;
             arr.push(item);
@@ -275,7 +275,7 @@ function diff(arr1, arr2) {
     obj = {};
     arr = [];
     arr2.sort();
-    arr2.forEach(function(item, index) {
+    arr2.forEach(function (item, index) {
         if (!obj[item]) {
             obj[item] = 1;
             arr.push(item);
@@ -286,12 +286,12 @@ function diff(arr1, arr2) {
     obj = {};
     arr = [];
     newArr = arr1.concat(arr2);
-    newArr.forEach(function(item, index) {
+    newArr.forEach(function (item, index) {
         if (!obj[item]) {
             obj[item] = 1;
             arr.push(item);
         } else {
-            arr.forEach(function(itemk, indexk) {
+            arr.forEach(function (itemk, indexk) {
                 if (itemk == item) {
                     arr.splice(indexk, 1);
                 }
@@ -312,7 +312,7 @@ diff(["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "ande
 function where(collection, source) {
     var arr = [];
     // What's in a name?
-    collection.forEach(function(item, index) {
+    collection.forEach(function (item, index) {
         var count = 0;
         var counts = 0;
         for (var i in source) {
@@ -344,7 +344,7 @@ where([{
 //20,查询替换算法
 function myReplace(str, before, after) {
     var reg = new RegExp("" + before + "", "g");
-    str = str.replace(reg, function(word) {
+    str = str.replace(reg, function (word) {
         var code = word.substring(0, 1).charAt();
         if ('A' < code && code < 'Z') {
             return after.substring(0, 1).toUpperCase() + after.substring(1);
@@ -360,7 +360,7 @@ myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
 //21,字符配对算法
 function pair(str) {
     var arr = [];
-    var a = Array.prototype.map.call(str, function(x) {
+    var a = Array.prototype.map.call(str, function (x) {
 
         if (x == "T") {
             arr.push(["T", "A"]);
@@ -382,12 +382,12 @@ function fearNotLetter(str) {
     var res = '';
     var narr = [];
     var len = str.length;
-    var arr = Array.prototype.map.call(str, function(item) {
+    var arr = Array.prototype.map.call(str, function (item) {
         return item.charCodeAt();
     });
 
 
-    arr.reduce(function(pre, next) {
+    arr.reduce(function (pre, next) {
         console.log(pre, next);
         if (next - pre > 1) {
             var num = next - pre;
@@ -420,13 +420,13 @@ boo(null);
 function unite(arr1, arr2, arr3) {
     var args = Array.prototype.slice.call(arguments);
 
-    var arr = args.reduce(function(pre, next) {
+    var arr = args.reduce(function (pre, next) {
         return pre.concat(next);
     });
     var tmpobj = {};
     var narr = [];
     console.log(arr, args);
-    arr.forEach(function(item, index) {
+    arr.forEach(function (item, index) {
         if (!tmpobj[item]) {
             tmpobj[item] = 1;
             narr.push(item);
@@ -439,7 +439,7 @@ unite([1, 3, 2], [1, [5]], [2, [4]]);
 //25,html符号转实体算法
 function convert(str) {
     // &colon;&rpar;
-    var nstr = str.replace(/[&<>\"\']/g, function(word) {
+    var nstr = str.replace(/[&<>\"\']/g, function (word) {
         console.log(word, word.charCodeAt(), word == '>', arguments);
         if (word == '&') {
             return '&amp;';
@@ -463,11 +463,11 @@ function spinalCase(str) {
     // "It's such a fine line between stupid, and clever."
     // --David St. Hubbins
     var nnstr = str.replace(/([a-z])([A-Z])/g, "$1-$2");
-    var nstr = nnstr.replace(/\w+/g, function(word) {
+    var nstr = nnstr.replace(/\w+/g, function (word) {
         console.log(word);
         return word.toLowerCase();
     });
-    var nstr2 = nstr.replace(/[\s_]/g, function(word) {
+    var nstr2 = nstr.replace(/[\s_]/g, function (word) {
         console.log(word);
         return "-";
     });
@@ -492,12 +492,12 @@ function sumFibs(num) {
 
     }
     console.log("arr=", arr);
-    arr.forEach(function(item, index) {
+    arr.forEach(function (item, index) {
         if (item % 2 !== 0) {
             narr.push(item);
         }
     });
-    var sum = narr.reduce(function(pre, next) {
+    var sum = narr.reduce(function (pre, next) {
         return pre + next;
     });
     console.log("narr=", narr);
@@ -520,7 +520,7 @@ function sumPrimes(num) {
         }
     }
     console.log(arr);
-    var sum = arr.reduce(function(pre, next) {
+    var sum = arr.reduce(function (pre, next) {
         return pre + next;
     });
     return sum;
@@ -543,7 +543,7 @@ function smallestCommons(arr) {
         return abc(b % a, a);
     }
     console.log(narr);
-    var scsum = narr.reduce(function(pre, next) {
+    var scsum = narr.reduce(function (pre, next) {
         return pre * next / abc(pre, next);
     });
     return scsum;
@@ -559,7 +559,7 @@ function find(arr, func) {
     var len = arr.length;
     var count = 0;
     var res = 0;
-    arr.forEach(function(item, index) {
+    arr.forEach(function (item, index) {
         if (func(item)) {
             //narr.push(item);
             count++;
@@ -577,7 +577,7 @@ function find(arr, func) {
     return res;
 }
 
-find([1, 3, 5, 8, 9, 10], function(num) {
+find([1, 3, 5, 8, 9, 10], function (num) {
     return num % 2 === 0;
 });
 //31,数组取值算法
@@ -585,7 +585,7 @@ function drop(arr, func) {
     // Drop them elements.
     var narr = [];
     var count = 0;
-    arr.forEach(function(item, index) {
+    arr.forEach(function (item, index) {
         var res = func(item);
         console.log(item, index);
         if (!!res) {
@@ -599,7 +599,7 @@ function drop(arr, func) {
     return narr;
 }
 
-drop([0, 1, 0, 1], function(n) {
+drop([0, 1, 0, 1], function (n) {
     return n === 1;
 });
 //32,数组简化算法
@@ -611,7 +611,7 @@ function steamroller(arr) {
     var narr = [];
 
     function abc(varr) {
-        varr.forEach(function(item, index) {
+        varr.forEach(function (item, index) {
             if (Array.isArray(item)) {
                 abc(item);
             } else {
@@ -633,7 +633,7 @@ steamroller([1, [2],
 function binaryAgent(str) {
     var arr = str.split(' ');
 
-    var narr = arr.map(function(item, index) {
+    var narr = arr.map(function (item, index) {
         var code = parseInt(item, 2);
 
         var char = String.fromCharCode(code);
@@ -647,7 +647,7 @@ binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 0110
 //34，数组元素判断算法
 function every(collection, pre) {
     // Is everyone being true?
-    var res = collection.every(function(elem, index) {
+    var res = collection.every(function (elem, index) {
         return elem[pre];
     });
     return res;
@@ -669,13 +669,13 @@ every([{
 //35,函数迭代可选参数算法
 function add() {
     var args = Array.prototype.slice.call(arguments);
-    var res = args.every(function(elem, index) {
+    var res = args.every(function (elem, index) {
         return Object.prototype.toString.call(elem) == '[object Number]';
     });
     if (!res) {
         res = undefined;
     } else if (args.length == 1) {
-        res = function(tmp) {
+        res = function (tmp) {
 
             return add(args[0], tmp);
         };
@@ -764,36 +764,36 @@ function sym(args) {
 
 sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]);
 //38,类及对象构建算法
-var Person = function(firstAndLast) {
+var Person = function (firstAndLast) {
 
     var full = firstAndLast || '';
     var arr = [];
     var first = '';
     var last = '';
-    var init = function(vfull) {
+    var init = function (vfull) {
         arr = vfull.split(' ');
         first = arr[0];
         last = arr[1];
     };
 
-    this.getFirstName = function() {
+    this.getFirstName = function () {
         return first;
     };
-    this.getLastName = function() {
+    this.getLastName = function () {
         return last;
     };
-    this.getFullName = function() {
+    this.getFullName = function () {
         return full;
     };
-    this.setFirstName = function(vfirst) {
+    this.setFirstName = function (vfirst) {
         first = vfirst;
         full = first + ' ' + last;
     };
-    this.setLastName = function(vlast) {
+    this.setLastName = function (vlast) {
         last = vlast;
         full = first + ' ' + last;
     };
-    this.setFullName = function(vfull) {
+    this.setFullName = function (vfull) {
         full = vfull;
         init(full);
     };
@@ -824,7 +824,7 @@ function pairwise(arr, arg) {
     if (varr.length === 0) {
         return res;
     }
-    res = varr.reduce(function(pre, next) {
+    res = varr.reduce(function (pre, next) {
         return pre + next;
     });
     return res;
@@ -838,11 +838,12 @@ function jsonHandle(vtreeData, vknowTextJson) {
     var data = vtreeData || [];
     var knowTextJson = vknowTextJson || [];
     var me = this;
+
     function abc(vdata) {
         var data = vdata || [];
         for (var i = 0; i < data.length; i++) {
             var item = data[i];
-            (function(item) {
+            (function (item) {
                 //已有知识点设置选中
                 for (var k = 0, len = knowTextJson.length; k < len; k++) {
                     var itemk = knowTextJson[k];
