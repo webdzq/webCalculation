@@ -92,7 +92,7 @@ function confirmEnding(str, target) {
 }
 
 confirmEnding("Bastian", "n");
-//8,重复操作算法
+//8,重复操作算法（循环num方法或者使用数组来push，然后转为字符串）
 function repeat(str, num) {
     // repeat after me
     var str1 = '';
@@ -133,7 +133,7 @@ function chunk(arr, size) {
     return narr;
 }
 
-chunk(["a", "b", "c", "d"], 2);
+chunk(["a", "b", "c", "d"], 3);
 //11,数组截断算法挑战
 function slasher(arr, howMany) {
     // it doesn't always pay to be first
@@ -272,6 +272,7 @@ function diff(arr1, arr2) {
     });
     arr1 = arr;
     console.log(arr);
+    //arr1去重结束
     obj = {};
     arr = [];
     arr2.sort();
@@ -283,15 +284,19 @@ function diff(arr1, arr2) {
     });
     arr2 = arr;
     console.log(arr2);
+    //arr2去重结束
     obj = {};
     arr = [];
     newArr = arr1.concat(arr2);
+    console.log('newArr=', newArr);
     newArr.forEach(function (item, index) {
         if (!obj[item]) {
             obj[item] = 1;
             arr.push(item);
         } else {
+            //去掉重复的元素
             arr.forEach(function (itemk, indexk) {
+                console.log('itemk=', itemk, item);
                 if (itemk == item) {
                     arr.splice(indexk, 1);
                 }
@@ -306,7 +311,7 @@ function diff(arr1, arr2) {
     return newArr;
 }
 
-diff([1, 1, 2, 2, 3, 3, 5, 3, 5], [1, 2, 3, 3, 5, 3, 5, 3, 4, 5]);
+diff([1, 1, 2, 2, 3, 3, 5, 3, 5], [1, 2, 3, 3, 5, 3, 5, 3, 4, 5]); //--->4
 diff(["andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]);
 //19,对象搜索算法
 function where(collection, source) {
@@ -386,7 +391,10 @@ function fearNotLetter(str) {
         return item.charCodeAt();
     });
 
-
+    if (arr[len - 1] - arr[0] == len - 1) {
+        res = undefined; //说明不缺，不需要补充
+        return res;
+    }
     arr.reduce(function (pre, next) {
         console.log(pre, next);
         if (next - pre > 1) {
@@ -400,13 +408,11 @@ function fearNotLetter(str) {
     });
     console.log("narr=", narr);
     res = narr.join('');
-    if (arr[len - 1] - arr[0] == len - 1) {
-        res = undefined;
-    }
+
     return res;
 }
 
-fearNotLetter("abce");
+fearNotLetter("abe"); //==》cd
 
 //23,输入检查算法
 function boo(bool) {
@@ -463,6 +469,7 @@ function spinalCase(str) {
     // "It's such a fine line between stupid, and clever."
     // --David St. Hubbins
     var nnstr = str.replace(/([a-z])([A-Z])/g, "$1-$2");
+    console.log("nnstr=", nnstr);
     var nstr = nnstr.replace(/\w+/g, function (word) {
         console.log(word);
         return word.toLowerCase();
@@ -538,10 +545,11 @@ function smallestCommons(arr) {
         narr.push(arr[0] + i);
     }
 
-    function abc(a, b) {
+    function abc(a, b) { //求两个数的最大公约数
         if (a === 0) return b;
         return abc(b % a, a);
     }
+
     console.log(narr);
     var scsum = narr.reduce(function (pre, next) {
         return pre * next / abc(pre, next);
@@ -550,8 +558,8 @@ function smallestCommons(arr) {
 }
 
 
-smallestCommons([1, 5]);
-smallestCommons([5, 1]);
+smallestCommons([2, 5]);
+smallestCommons([5, 4]);
 //30,数组验证算法
 function find(arr, func) {
 
@@ -579,7 +587,7 @@ function find(arr, func) {
 
 find([1, 3, 5, 8, 9, 10], function (num) {
     return num % 2 === 0;
-});
+}); //只取第一个，8
 //31,数组取值算法
 function drop(arr, func) {
     // Drop them elements.
@@ -624,11 +632,7 @@ function steamroller(arr) {
     return narr;
 }
 
-steamroller([1, [2],
-    [3, [
-        [4]
-    ]]
-]);
+steamroller([1, [2], [3, [[4]]]]);
 //33,二进制转字符算法
 function binaryAgent(str) {
     var arr = str.split(' ');
@@ -698,7 +702,7 @@ function telephoneCheck(str) {
 
 
 telephoneCheck("555-555-5555");
-//37,集合交集算法
+//37,集合x集算法（并集中去掉交集的部分）
 function sym(args) {
     //基本思路：去重，合并，去重，递归下一个。每次只能操作前两个，递归是为了把所有参数都操作一次。
     console.log(args);
@@ -709,9 +713,10 @@ function sym(args) {
         var obj = {};
         var obj2 = [];
         var zarr = [];
-        var tmparr = argsarr.splice(0, 2);
+        var tmparr = argsarr.splice(0, 2); //前两个数组
         var len = argsarr.length;
         console.log("tmparr[0]", tmparr[0]);
+        //tmparr[0]去重
         for (var g = 0; g < tmparr[0].length; g++) {
             var itemg = tmparr[0][g];
             if (!obj[itemg]) {
@@ -723,6 +728,7 @@ function sym(args) {
         }
         obj = {};
         console.log("tmparr[1]", tmparr[1]);
+        //tmparr[1]去重
         for (var m = 0; m < tmparr[1].length; m++) {
             var itemm = tmparr[1][m];
             if (!obj[itemm]) {
@@ -740,13 +746,14 @@ function sym(args) {
             if (!obj[item]) {
                 obj[item] = 1;
             } else {
-                obj2[item] = 1;
+                obj2[item] = 1; //交集部分
             }
         }
+        console.log("obj=", obj, obj2);
         for (var j = 0; j < narr.length; j++) {
             var itemj = narr[j];
             if (!obj2[itemj]) {
-                zarr.push(itemj);
+                zarr.push(itemj); //生成并集且去掉了交集的部分
             }
         }
         console.log(zarr, argsarr, arguments, len);
@@ -827,11 +834,12 @@ function pairwise(arr, arg) {
     res = varr.reduce(function (pre, next) {
         return pre + next;
     });
+    console.log("arr...", arr);
     return res;
 }
 
-pairwise([1, 4, 2, 3, 0, 5], 100);
-//40,复杂json数据处理算法
+pairwise([1, 4, 2, 3, 0, 5], 5); //=>15
+//40,复杂json数据处理算法(递归很耗内存的。注意json的数据量级)
 function jsonHandle(vtreeData, vknowTextJson) {
     //递归函数：优化数据，父节点去掉checkbox，只有叶子节点才有checkbox
     //vknowTextJson,默认选中的
