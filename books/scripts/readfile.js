@@ -1,3 +1,4 @@
+//node读取文件
 var fs = require('fs');
 
 var container = [];
@@ -5,7 +6,7 @@ var container = [];
 function readLines(input, func) {
     var remaining = '';
 
-    input.on('data', function(data) {
+    input.on('data', function (data) {
         remaining += data;
         var index = remaining.indexOf('\n');
         while (index > -1) {
@@ -17,7 +18,7 @@ function readLines(input, func) {
 
     });
 
-    input.on('end', function() {
+    input.on('end', function () {
         if (remaining.length > 0) {
             func(remaining);
         }
