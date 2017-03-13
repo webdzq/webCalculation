@@ -297,6 +297,11 @@ function factorial(n) {
         return n * factorial(n - 1);
     }
 }
+//es6的尾调用实现
+function factorial(n, total = 1) {
+    if (n === 1) return total;
+    return factorial(n - 1, n * total);
+}
 //栈的写法
 function fact(n) {
     var s = new Stack();
@@ -1693,16 +1698,16 @@ console.log("qSort消耗时间：", end - start);
 //
 // 大顶堆：每个节点的值都大于或等于其子节点的值，在堆排序算法中用于升序排列
 // 小顶堆：每个节点的值都小于或等于其子节点的值，在堆排序算法中用于降序排列
-var len;    //因为声明的多个函数都需要数据长度，所以把len设置成为全局变量
+var len; //因为声明的多个函数都需要数据长度，所以把len设置成为全局变量
 
-function buildMaxHeap(arr) {   //建立大顶堆
+function buildMaxHeap(arr) { //建立大顶堆
     len = arr.length;
-    for (var i = Math.floor(len/2); i >= 0; i--) {
+    for (var i = Math.floor(len / 2); i >= 0; i--) {
         heapify(arr, i);
     }
 }
 
-function heapify(arr, i) {     //堆调整
+function heapify(arr, i) { //堆调整
     var left = 2 * i + 1,
         right = 2 * i + 2,
         largest = i;
@@ -1730,7 +1735,7 @@ function swap(arr, i, j) {
 function heapSort(arr) {
     buildMaxHeap(arr);
 
-    for (var i = arr.length-1; i > 0; i--) {
+    for (var i = arr.length - 1; i > 0; i--) {
         swap(arr, 0, i);
         len--;
         heapify(arr, 0);
@@ -1738,7 +1743,7 @@ function heapSort(arr) {
     return arr;
 }
 
-var arr=[96,95,12,23,4,5,56];
+var arr = [96, 95, 12, 23, 4, 5, 56];
 heapSort(arr);
 //测试用例：
 var numElements = 10;
