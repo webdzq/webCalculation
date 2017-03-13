@@ -416,7 +416,6 @@ function display() {
 function find(item) {
     //查找当前节点
     var currNode = this.head;
-
     while (currNode.element != item) {
         currNode = currNode.next;
     }
