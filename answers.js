@@ -444,8 +444,10 @@ function unite(arr1, arr2, arr3) {
 unite([1, 3, 2], [1, [5]], [2, [4]]);
 //es6的数组去重
 // 例一
-var set = new Set([1, 2, 3, 4, 4]);
-[...set]
+
+var items = new Set([1, 2, 3, 3, 4, 5]);
+var array = Array.from(items);
+[...array]
 // [1, 2, 3, 4]
 //25,html符号转实体算法
 function convert(str) {
