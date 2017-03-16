@@ -443,12 +443,13 @@ function unite(arr1, arr2, arr3) {
 
 unite([1, 3, 2], [1, [5]], [2, [4]]);
 //es6的数组去重
-// 例一
 
-var items = new Set([1, 2, 3, 3, 4, 5]);
-var array = Array.from(items);
-[...array]
-// [1, 2, 3, 4]
+function dedupe(array) {
+    return Array.from(new Set(array));
+}
+
+dedupe([1, 1, 2, 3, 4, 5, 4, 5]);
+// [1, 2, 3, 4,5]
 //25,html符号转实体算法
 function convert(str) {
     // &colon;&rpar;
