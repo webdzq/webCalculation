@@ -447,7 +447,10 @@ unite([1, 3, 2], [1, [5]], [2, [4]]);
 function dedupe(array) {
     return Array.from(new Set(array));
 }
-
+或者：
+function dedupe(array) {
+    return [...new Set(array)];
+}
 dedupe([1, 1, 2, 3, 4, 5, 4, 5]);
 // [1, 2, 3, 4,5]
 //25,html符号转实体算法
