@@ -1,3 +1,5 @@
+# javascript算法
+<pre>
 1，web的一些常见算法,共40个。深刻理解js的编程。主要使用了es5中字符串和数组的方法。<br/>
 2，题型和答案的编号是对应的。如果题型中规则描述不清晰，可以直接看case。答案全部是本人编写的，并通过所有case测试了。仅供参考，并非最佳。<br/>
 3，如果你有更好的实现方法，可以issue。我会补充到方法中。<br/>
@@ -8,6 +10,11 @@
 8，如果你觉得这些都简单，可以加case和规则，提高难度，锻炼思维。<br/>
 9，数组的方法参考MDN(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)<br/>
 10，books文件夹里收录了一下算法书籍里的算法和调试结果。<br/>
+11，javascript算法：https://github.com/mgechev/javascript-algorithms<br/>
 w3cshool是程序员自我提升非常好的平台。适合各个阶段的人。<br/>
 算法模型来源w3cshool：http://www.w3cschool.cn/codecamp/list；<br/>
 ps：如果你是新手，可以学习一下。如果你是大神。请批评和指正，希望可以提供更优算法方法，或者提供更多学习js编程的好算法。互相学习，不胜感激！<br/>
+
+</pre>
+
+
